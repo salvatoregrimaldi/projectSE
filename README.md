@@ -15,5 +15,8 @@ https://unisalerno-my.sharepoint.com/:x:/g/personal/e_dimauro5_studenti_unisa_it
 Link al documento delle convenzioni:
 https://unisalerno-my.sharepoint.com/:w:/g/personal/e_dimauro5_studenti_unisa_it/EYHOxZwcl2NOo3y6SQnPJIcBHpskwIQhpKTbgyHbMs0pFA?e=PD8cJ9
 
+Link al documento della progettazione:
+https://unisalerno-my.sharepoint.com/:w:/g/personal/e_dimauro5_studenti_unisa_it/EYVOCmkT_LdCnx0XK4-sGWsBya4ondVy34zzQQ2fE4JLsA?e=tHx6zt
+
 
 
