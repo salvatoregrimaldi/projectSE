@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
     <children>
-        <Button layoutX="126" layoutY="90" text="ciaoAsdrubale!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <TextField fx:id="textField" layoutX="17.0" layoutY="14.0" prefHeight="26.0" prefWidth="342.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" />
+      <ListView fx:id="listView" layoutX="88.0" layoutY="257.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="57.0" />
     </children>
 </AnchorPane>
