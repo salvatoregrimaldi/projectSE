@@ -252,4 +252,10 @@ public class Calculator {
         op = stack.pop();
         stack.push(op.sqrt());
     }
+    
+    public void negate() throws NoSuchElementException {
+        Complex op;
+        op = stack.pop();
+        stack.push(op.negate());
+    }
 }
