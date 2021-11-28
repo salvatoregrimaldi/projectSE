@@ -46,6 +46,11 @@ public class FXMLDocumentController implements Initializable {
                         setText(null);
                     } else {
                         setText(c.toString());
+                        /*if (c.getImaginary() >= 0) {
+                            setText(String.format("%.5f" + "+" + "%.5f", c.getReal(), c.getImaginary()));
+                        } else {
+                            setText(String.format("%.5f" + "%.5f", c.getReal(), c.getImaginary()));
+                        }*/
                     }
                 }
             };
@@ -69,6 +74,8 @@ public class FXMLDocumentController implements Initializable {
                         } catch (NoSuchElementException e) {
                             return;
                         }
+                    } else if (id == -1) {
+                        textField.setText("Syntax Error");
                     }
                     listView.getItems().clear();
                     al.clear();

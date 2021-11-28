@@ -43,7 +43,7 @@ public class Calculator {
         if (input.equals("i")) {
             return true;
         }
-        if ('i' == input.charAt(0) || 'i' == input.charAt(input.length() - 1)) {
+        if (input.length()!=0 && ('i' == input.charAt(0) || 'i' == input.charAt(input.length() - 1))) {
             if (!input.replaceFirst("i", "").contains("i")) {
                 input = input.replace("i", "");
                 if (!input.equals(".") && input.matches("([0-9])*(\\.([0-9])*)?")) {
@@ -90,16 +90,23 @@ public class Calculator {
     }
 
     public int recognizer(String input) {
-        if (isReal(input)) {
+        if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
         }
-        if (isImaginary(input)) {
-            return 0;
+        switch (input) {
+            case "+":
+                return 1;
+            case "-":
+                return 2;
+            case "*":
+                return 3;
+            case "/":
+                return 4;
+            case "sqrt":
+                return 5;
+            case "+-":
+                return 6;
         }
-        if (isComplex(input)) {
-            return 0;
-        }
-        //insert operation strings recognition
         return -1;
     }
 

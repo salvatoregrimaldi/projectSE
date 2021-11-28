@@ -804,6 +804,25 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("7.9.i7"));
         assertEquals(-1, instance.recognizer("i.."));
         assertEquals(-1, instance.recognizer("i.7."));
+        
+        assertEquals(1, instance.recognizer("+"));
+        assertEquals(2, instance.recognizer("-"));
+        assertEquals(3, instance.recognizer("*"));
+        assertEquals(4, instance.recognizer("/"));
+        assertEquals(5, instance.recognizer("sqrt"));
+        assertEquals(6, instance.recognizer("+-"));
+        
+        assertEquals(-1, instance.recognizer("++"));
+        assertEquals(-1, instance.recognizer("--"));
+        assertEquals(-1, instance.recognizer("+--"));
+        assertEquals(-1, instance.recognizer("log"));
+        assertEquals(-1, instance.recognizer("srqt"));
+        assertEquals(-1, instance.recognizer("-+"));
+        assertEquals(-1, instance.recognizer("+ +"));
+        assertEquals(-1, instance.recognizer("- -"));
+        assertEquals(-1, instance.recognizer("$"));
+        assertEquals(-1, instance.recognizer(" +"));
+        
     }
 
     @Test
@@ -996,4 +1015,6 @@ public class CalculatorTest {
         assertEquals(6, instance.makeOperation(6));
         assertEquals(-1, instance.makeOperation(7));
     }
+    
+
 }
