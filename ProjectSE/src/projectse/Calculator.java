@@ -8,6 +8,7 @@ package projectse;
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
 import java.util.ArrayDeque;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -212,6 +213,14 @@ public class Calculator {
 
     public void makeOperation(int id) {
         //
+    }
+
+    public void add() throws NoSuchElementException {
+        Complex op1, op2, result;
+        op2 = stack.pop();
+        op1 = stack.pop();
+        result = op1.add(op2);
+        stack.push(result);
     }
 
 }
