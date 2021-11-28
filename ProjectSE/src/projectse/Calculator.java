@@ -25,27 +25,6 @@ public class Calculator {
         return stack;
     }
 
-    public void pushComplex(String number) {
-        if (isReal(number)) {
-            stack.push(new Complex(Double.parseDouble(number)));
-        } else {
-            String[] parts = {"", ""};
-            if (number.contains("+")) {
-                parts = number.split("\\+");
-                parts[1] = parts[1].replace("i", "");
-                stack.push(new Complex(Double.parseDouble(parts[0]), Double.parseDouble(parts[1])));
-            } else if (number.contains("-")) {
-                parts = number.split("-");
-                parts[1] = parts[1].replace("i", "");
-                stack.push(new Complex(Double.parseDouble(parts[0]), -Double.parseDouble(parts[1])));
-            }
-        }
-    }
-
-    public Complex popComplex() {
-        return stack.pop();
-    }
-
     private boolean isReal(String input) {
         try {
             Double.parseDouble(input);
@@ -121,6 +100,114 @@ public class Calculator {
         }
         //insert operation strings recognition
         return -1;
+    }
+
+    public boolean pushComplex(String number) {
+        String swap;
+        int firstSign = 1;
+        int secondSign = 1;
+        number = number.replace(" ", "");
+
+        if (isReal(number)) {
+            if (number.matches("-0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                number = "0";
+            }
+            try {
+                stack.push(new Complex(Double.parseDouble(number)));
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        if (isImaginary(number)) {
+            if (number.charAt(0) == '+') {
+                number = number.substring(1);
+            } else if (number.charAt(0) == '-') {
+                firstSign = -1;
+                number = number.substring(1);
+            }
+            if (number.equals("i")) {
+                try {
+                    stack.push(new Complex(0, firstSign));
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            } else {
+                number = number.replace("i", "");
+                if (number.matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                    number = "0";
+                    firstSign = 1;
+                }
+                try {
+                    stack.push(new Complex(0, firstSign * Double.parseDouble(number)));
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        }
+
+        if (isComplex(number)) {
+            if (number.charAt(0) == '+') {
+                number = number.substring(1);
+            } else if (number.charAt(0) == '-') {
+                firstSign = -1;
+                number = number.substring(1);
+            }
+            String[] parts = {"", ""};
+            if (number.contains("-")) {
+                secondSign = -1;
+            }
+            parts = number.split("\\+|-", -1);
+            if (parts[1].equals("i")) {
+                parts[1] = "1i";
+            } else if (parts[0].equals("i")) {
+                parts[0] = "1i";
+            }
+            if (parts[0].contains("i")) {
+                swap = parts[0];
+                parts[0] = parts[1];
+                parts[1] = swap;
+                parts[1] = parts[1].replace("i", "");
+                if (parts[0].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                    parts[0] = "0";
+                    secondSign = 1;
+                }
+                if (parts[1].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                    parts[1] = "0";
+                    firstSign = 1;
+                }
+                try {
+                    stack.push(new Complex(secondSign * Double.parseDouble(parts[0]), firstSign * Double.parseDouble(parts[1])));
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            } else {
+                parts[1] = parts[1].replace("i", "");
+                if (parts[0].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                    parts[0] = "0";
+                    firstSign = 1;
+                }
+                if (parts[1].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                    parts[1] = "0";
+                    secondSign = 1;
+                }
+                try {
+                    stack.push(new Complex(firstSign * Double.parseDouble(parts[0]), secondSign * Double.parseDouble(parts[1])));
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Complex popComplex() {
+        return stack.pop();
     }
 
     public void makeOperation(int id) {
