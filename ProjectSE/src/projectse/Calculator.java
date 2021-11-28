@@ -26,19 +26,18 @@ public class Calculator {
     }
 
     public void pushComplex(String number) {
-        if(isDouble(number))
+        if (isReal(number)) {
             stack.push(new Complex(Double.parseDouble(number)));
-        else{
-            String[] parts = {"",""};
-            if (number.contains("+")){
+        } else {
+            String[] parts = {"", ""};
+            if (number.contains("+")) {
                 parts = number.split("\\+");
-                parts[1]=parts[1].replace("i", "");
-                stack.push(new Complex(Double.parseDouble(parts[0]),Double.parseDouble(parts[1])));
-            }
-            else if (number.contains("-")){
+                parts[1] = parts[1].replace("i", "");
+                stack.push(new Complex(Double.parseDouble(parts[0]), Double.parseDouble(parts[1])));
+            } else if (number.contains("-")) {
                 parts = number.split("-");
-                parts[1]=parts[1].replace("i", "");
-                stack.push(new Complex(Double.parseDouble(parts[0]),-Double.parseDouble(parts[1])));
+                parts[1] = parts[1].replace("i", "");
+                stack.push(new Complex(Double.parseDouble(parts[0]), -Double.parseDouble(parts[1])));
             }
         }
     }
@@ -47,7 +46,7 @@ public class Calculator {
         return stack.pop();
     }
 
-    private boolean isDouble(String input) {
+    private boolean isReal(String input) {
         try {
             Double.parseDouble(input);
         } catch (NumberFormatException e) {
@@ -55,32 +54,49 @@ public class Calculator {
         }
         return true;
     }
-    
-    private boolean isComplex(String input){
-        if ((input.contains("+") && input.split("\\+").length != 2)||(input.contains("-") && input.split("-").length != 2))
-            return false;
-        else{
-            String[] parts = {"",""};
-            if(input.contains("+"))
-                parts = input.split("\\+");
-            else if (input.contains("-"))
-                parts = input.split("-");
-            if(!parts[1].contains("i"))
-                return false;
-            parts[1]=parts[1].replace("i", "");
-            if (!isDouble(parts[0]))
-                return false;
-            if (!isDouble(parts[1]))
-                return false;
-            return true;
+
+    private boolean isComplex(String input) {
+        input = input.replace(" ", "");
+        if (input.charAt(0) == '+' || input.charAt(0) == '-') {
+            input = input.substring(1);
         }
+        String[] parts = {"", ""};
+        parts = input.split("\\+|-", -1);
+        if (parts.length != 2) {
+            return false;
+        }
+        if (parts[0].length() == 0 || parts[1].length() == 0) {
+            return false;
+        }
+        if (!(('i' == parts[0].charAt(0) || 'i' == parts[0].charAt(parts[0].length() - 1)) || ('i' == parts[1].charAt(0) || 'i' == parts[1].charAt(parts[1].length() - 1)))) {
+            return false;
+        }
+        if ((parts[0].contains("i") && parts[1].contains("i")) || (!parts[0].contains("i") && !parts[1].contains("i"))) {
+            return false;
+        }
+        if (parts[0].replaceFirst("i", "").contains("i") || parts[1].replaceFirst("i", "").contains("i")) {
+            return false;
+        }
+        if (parts[0].equals("i")) {
+            parts[0] = "1i";
+        } else if (parts[1].equals("i")) {
+            parts[1] = "1i";
+        }
+        parts[0] = parts[0].replace("i", "");
+        parts[1] = parts[1].replace("i", "");
+        if (!isReal(parts[0]) || !isReal(parts[1])) {
+            return false;
+        }
+        return true;
     }
 
     public int recognizer(String input) {
-        if (isDouble(input))
+        if (isReal(input)) {
             return 0;
-        if (isComplex(input))
+        }
+        if (isComplex(input)) {
             return 0;
+        }
         //insert operation strings recognition
         return -1;
     }
