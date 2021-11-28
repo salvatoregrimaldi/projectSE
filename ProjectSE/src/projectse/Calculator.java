@@ -238,4 +238,12 @@ public class Calculator {
         result = op1.multiply(op2);
         stack.push(result);
     }
+
+    public void divide() throws NoSuchElementException {
+        Complex op1, op2, result;
+        op2 = stack.pop();
+        op1 = stack.pop();
+        result = op1.divide(op2);
+        stack.push(result);
+    }
 }
