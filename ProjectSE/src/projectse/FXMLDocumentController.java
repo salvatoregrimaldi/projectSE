@@ -7,13 +7,14 @@ package projectse;
 
 import com.vm.jcomplex.Complex;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -21,7 +22,7 @@ import javafx.scene.input.KeyEvent;
 
 /**
  *
- * @author Salvatore
+ * @author Group3
  */
 public class FXMLDocumentController implements Initializable {
 
@@ -32,33 +33,53 @@ public class FXMLDocumentController implements Initializable {
     private Calculator calc;
     private String input = "";
     private int id;
-    public static final int N_OP = 20;
-    
+    public static final int N_OP = 6;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        listView.setCellFactory(s -> {
+            ListCell<Complex> cell = new ListCell<Complex>() {
+                @Override
+                protected void updateItem(Complex c, boolean empty) {
+                    super.updateItem(c, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(c.toString());
+                    }
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
         calc = new Calculator();
-        ListProperty<Complex> listProperty = new SimpleListProperty<>();
-        listView.setItems(listProperty);
-        listProperty.set(FXCollections.observableArrayList());
+        ArrayList<Complex> al = new ArrayList<>();
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
-                if (ke.getCode().equals(KeyCode.ENTER)) {
+                if (ke.getCode().equals(KeyCode.ENTER) && !textField.getText().equals("")) {
                     input = textField.getText();
                     textField.clear();
-                    id=calc.recognizer(input);
-                    if(id==0){
+                    id = calc.recognizer(input);
+                    if (id == 0) {
                         calc.pushComplex(input);
-                        listProperty.clear();
-                        listProperty.addAll(calc.getStack());
+                    } else if (id > 0 && id <= N_OP) {
+                        try {
+                            calc.makeOperation(id);
+                        } catch (NoSuchElementException e) {
+                            return;
+                        }
                     }
-                    else if(id>0 && id<=N_OP){
-                        calc.makeOperation(id);
+                    listView.getItems().clear();
+                    al.clear();
+                    al.addAll(calc.getStack());
+                    if (calc.getStack().size() > 12) {
+                        listView.getItems().addAll(al.subList(0, 12));
+                    } else {
+                        listView.getItems().addAll(al.subList(0, calc.getStack().size()));
                     }
                 }
             }
         });
-    }    
-    
+    }
 }

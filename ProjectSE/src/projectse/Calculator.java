@@ -11,7 +11,7 @@ import java.util.ArrayDeque;
 
 /**
  *
- * @author andre
+ * @author Group3
  */
 public class Calculator {
 

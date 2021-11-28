@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Salvatore
+ * @author Group3
  */
 public class ProjectSE extends Application {
     
@@ -25,6 +25,7 @@ public class ProjectSE extends Application {
         
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     /**
