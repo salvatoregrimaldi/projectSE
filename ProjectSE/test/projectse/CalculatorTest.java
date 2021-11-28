@@ -922,4 +922,26 @@ public class CalculatorTest {
             i++;
         }
     }
+
+    @Test
+    public void testSqrt() {
+        System.out.println("sqrt");
+        int i = 0;
+        Calculator instance = new Calculator();
+        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
+            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
+            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
+            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
+            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
+        for (Complex x : array) {
+            System.out.println(array[i] + " sqrt");
+            instance.pushComplex(array[i].toString());
+            instance.sqrt();
+            System.out.println("result: " + instance.getStack().getFirst());
+            System.out.println("\n");
+            assertEquals(array[i].sqrt(), instance.getStack().pop());
+            i++;
+        }
+    }
 }

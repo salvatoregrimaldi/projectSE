@@ -246,4 +246,10 @@ public class Calculator {
         result = op1.divide(op2);
         stack.push(result);
     }
+
+    public void sqrt() throws NoSuchElementException {
+        Complex op;
+        op = stack.pop();
+        stack.push(op.sqrt());
+    }
 }
