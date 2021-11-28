@@ -157,6 +157,7 @@ public class CalculatorTest {
         assertEquals(0, instance.recognizer("0.+0i"));
         assertEquals(0, instance.recognizer(".0+0i"));
         assertEquals(0, instance.recognizer("0.5+0.3i"));
+        assertEquals(0, instance.recognizer("i-0.0"));
 
         //test double per isComplex()
         assertEquals(0, instance.recognizer("3.1+i"));
@@ -234,7 +235,120 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("+5-- +3i"));
         assertEquals(-1, instance.recognizer("5++3i"));
         assertEquals(-1, instance.recognizer("5 + + 3i"));
+        
 
+        //test interi per isImaginary()
+        assertEquals(0, instance.recognizer("5i"));
+        assertEquals(0, instance.recognizer("+5i"));
+        assertEquals(0, instance.recognizer("-5i"));
+        assertEquals(0, instance.recognizer("i5"));
+        assertEquals(0, instance.recognizer("+i5"));
+        assertEquals(0, instance.recognizer("-i5"));
+        assertEquals(0, instance.recognizer("i"));
+        assertEquals(0, instance.recognizer("+i"));
+        assertEquals(0, instance.recognizer("-i"));
+        assertEquals(0, instance.recognizer("0i"));
+        assertEquals(0, instance.recognizer("i0"));
+        assertEquals(0, instance.recognizer("+0i"));
+        assertEquals(0, instance.recognizer("-0i"));
+        assertEquals(0, instance.recognizer("1i"));
+        assertEquals(0, instance.recognizer("+1i"));
+        assertEquals(0, instance.recognizer("-1i"));
+        assertEquals(0, instance.recognizer("i1"));
+        assertEquals(0, instance.recognizer("+1i"));
+        assertEquals(0, instance.recognizer("-1i"));
+        assertEquals(-1, instance.recognizer("1i+"));
+        assertEquals(-1, instance.recognizer("1i-"));
+        assertEquals(-1, instance.recognizer("+1i+"));
+        assertEquals(-1, instance.recognizer("-1i-"));
+        assertEquals(-1, instance.recognizer("+ 1 i + "));
+        assertEquals(-1, instance.recognizer("- 1 i - "));
+        assertEquals(-1, instance.recognizer("+ 1 i - "));
+        assertEquals(-1, instance.recognizer("- 1 i + "));
+        assertEquals(-1, instance.recognizer("i+"));
+        assertEquals(-1, instance.recognizer("i-"));        
+        assertEquals(-1, instance.recognizer("--i"));
+        assertEquals(-1, instance.recognizer("---i"));
+        assertEquals(-1, instance.recognizer("++i"));
+        assertEquals(-1, instance.recognizer("+++i"));
+        assertEquals(-1, instance.recognizer("i---"));
+        assertEquals(-1, instance.recognizer("i+++"));
+        assertEquals(-1, instance.recognizer("i+-+-"));
+        
+        //test double per isImaginary()
+        assertEquals(0, instance.recognizer("5.9i"));
+        assertEquals(0, instance.recognizer("+5.9i"));
+        assertEquals(0, instance.recognizer("-5.9i"));
+        assertEquals(0, instance.recognizer("i5.9"));
+        assertEquals(0, instance.recognizer("+i5.9"));
+        assertEquals(0, instance.recognizer("-i5.9"));
+        assertEquals(0, instance.recognizer("0.0i"));
+        assertEquals(0, instance.recognizer("+0.0i"));
+        assertEquals(0, instance.recognizer("-0.0i"));
+        assertEquals(0, instance.recognizer("i0.0"));
+        assertEquals(-1, instance.recognizer("i."));
+        assertEquals(-1, instance.recognizer(".i"));
+        assertEquals(0, instance.recognizer("i.0"));
+        assertEquals(0, instance.recognizer("0.i"));
+        
+             
+        //test aggiuntivi per isImaginary()
+        assertEquals(0, instance.recognizer(".9i"));
+        assertEquals(0, instance.recognizer("9.i"));
+        assertEquals(-1, instance.recognizer(".i"));
+        assertEquals(-1, instance.recognizer("-.i"));             
+        assertEquals(-1, instance.recognizer("3i2"));
+        assertEquals(-1, instance.recognizer("9i."));
+        assertEquals(-1, instance.recognizer("9i.."));
+        assertEquals(-1, instance.recognizer("9i.+"));
+        assertEquals(-1, instance.recognizer("i+"));
+        assertEquals(-1, instance.recognizer(".i+"));
+        assertEquals(-1, instance.recognizer("+9i."));
+        assertEquals(-1, instance.recognizer("+.i"));
+        assertEquals(0, instance.recognizer("+.9i"));
+        assertEquals(-1, instance.recognizer(".i9"));
+        assertEquals(-1, instance.recognizer(" i + "));
+        assertEquals(-1, instance.recognizer(" i - "));
+        assertEquals(-1, instance.recognizer(" i ++ "));
+        assertEquals(-1, instance.recognizer(" i + + "));
+        assertEquals(-1, instance.recognizer(" +i + "));
+        assertEquals(-1, instance.recognizer(" +  i + "));
+        assertEquals(-1, instance.recognizer("++i"));
+        assertEquals(-1, instance.recognizer("---i"));
+        assertEquals(-1, instance.recognizer("+-i"));
+        assertEquals(-1, instance.recognizer("i++"));
+        assertEquals(-1, instance.recognizer("i+++"));
+        assertEquals(-1, instance.recognizer("+i+"));
+        assertEquals(-1, instance.recognizer("+i-"));
+        assertEquals(-1, instance.recognizer("-i+"));
+        assertEquals(-1, instance.recognizer("-i-"));
+        assertEquals(-1, instance.recognizer("i.i"));
+        assertEquals(-1, instance.recognizer("-i.i"));
+        assertEquals(-1, instance.recognizer("i.i+++"));
+        assertEquals(-1, instance.recognizer("ii9"));
+        assertEquals(-1, instance.recognizer("9ii"));
+        assertEquals(-1, instance.recognizer("0ii"));
+        assertEquals(-1, instance.recognizer("0i0"));
+        assertEquals(-1, instance.recognizer("-0ii"));
+        assertEquals(-1, instance.recognizer("-i0i"));
+        assertEquals(-1, instance.recognizer("-ii0"));
+        assertEquals(-1, instance.recognizer("+iii"));
+        assertEquals(-1, instance.recognizer("ii"));
+        assertEquals(-1, instance.recognizer("iiii"));
+        assertEquals(-1, instance.recognizer("-ii"));
+        assertEquals(-1, instance.recognizer(".ii"));
+        assertEquals(-1, instance.recognizer("9.ii"));
+        assertEquals(-1, instance.recognizer("9.iii"));
+        assertEquals(-1, instance.recognizer("ii.9"));       
+        assertEquals(-1, instance.recognizer("0.3.5i"));
+        assertEquals(-1, instance.recognizer("0..3i"));
+        assertEquals(-1, instance.recognizer("..3i"));
+        assertEquals(-1, instance.recognizer("..i"));
+        assertEquals(-1, instance.recognizer("..ii"));
+        assertEquals(-1, instance.recognizer("6.8.i.7"));
+        assertEquals(-1, instance.recognizer("7.9.i7"));
+        assertEquals(-1, instance.recognizer("i.."));
+        assertEquals(-1, instance.recognizer("i.7."));
     }
 
 }

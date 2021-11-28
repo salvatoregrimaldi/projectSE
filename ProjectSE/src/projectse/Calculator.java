@@ -55,6 +55,25 @@ public class Calculator {
         return true;
     }
 
+    private boolean isImaginary(String input) {
+        input = input.replace(" ", "");
+        if (input.charAt(0) == '+' || input.charAt(0) == '-') {
+            input = input.substring(1);
+        }
+        if (input.equals("i")) {
+            return true;
+        }
+        if ('i' == input.charAt(0) || 'i' == input.charAt(input.length() - 1)) {
+            if (!input.replaceFirst("i", "").contains("i")) {
+                input = input.replace("i", "");
+                if (!input.equals(".") && input.matches("([0-9])*(\\.([0-9])*)?")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean isComplex(String input) {
         input = input.replace(" ", "");
         if (input.charAt(0) == '+' || input.charAt(0) == '-') {
@@ -92,6 +111,9 @@ public class Calculator {
 
     public int recognizer(String input) {
         if (isReal(input)) {
+            return 0;
+        }
+        if (isImaginary(input)) {
             return 0;
         }
         if (isComplex(input)) {
