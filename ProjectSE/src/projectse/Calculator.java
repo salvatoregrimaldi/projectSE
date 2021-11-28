@@ -223,4 +223,12 @@ public class Calculator {
         stack.push(result);
     }
 
+    public void subtract() throws NoSuchElementException {
+        Complex op1, op2, result;
+        op2 = stack.pop();
+        op1 = stack.pop();
+        result = op1.subtract(op2);
+        stack.push(result);
+    }
+
 }
