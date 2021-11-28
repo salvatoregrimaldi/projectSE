@@ -1,6 +1,6 @@
 # projectSE
 
-Link al documento dei backlog:
+Link al documento dei backlog (product backlog e sprint backlog per ciascuno sprint):
 https://unisalerno-my.sharepoint.com/:w:/g/personal/e_dimauro5_studenti_unisa_it/EYta-prDJOhCi8n7WGIPf54B8eepEqcXKKPTWohWREBJ0w?e=0WDr9e
 
 Link al documento delle review e delle retrospective:
