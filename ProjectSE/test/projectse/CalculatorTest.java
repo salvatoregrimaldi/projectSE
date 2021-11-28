@@ -9,7 +9,6 @@ import com.vm.jcomplex.Complex;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static jdk.nashorn.internal.objects.NativeArray.reverse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -944,19 +943,19 @@ public class CalculatorTest {
             i++;
         }
     }
-    
-     @Test
+
+    @Test
     public void testNegate() {
         System.out.println("negate");
-        int i=0;
+        int i = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-                            new Complex(1,1), new Complex(1,0), new Complex(0,1), new Complex(-1,-1), new Complex(-1,0), new Complex(0,-1), new Complex(1,-1), new Complex(-1,1), 
-                            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-                            new Complex(1.0,1.0), new Complex(1.0,0.0), new Complex(0.0,1.0), new Complex(-1.0,-1.0),new Complex(1.0,-1.0), new Complex(-1.0,1.0),  new Complex(-1.0,0.0), new Complex(0.0,-1.0),
-                            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-                            new Complex(1.7,1.7), new Complex(1.7,0.7), new Complex(0.7,1.7), new Complex(-1.7,-1.7),new Complex(1.7,-1.7), new Complex(-1.7,1.7),  new Complex(-1.7,0.7), new Complex(0.7,-1.7)};
-        for(Complex x: array){
+            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
+            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
+            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
+            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
+        for (Complex x : array) {
             System.out.println(array[i] + " negate");
             instance.pushComplex(array[i].toString());
             instance.negate();
@@ -964,6 +963,37 @@ public class CalculatorTest {
             System.out.println("\n");
             assertEquals(array[i].negate(), instance.getStack().pop());
             i++;
-        }   
+        }
+    }
+
+    @Test
+    public void testMakeOperation() {
+        System.out.println("make operation");
+        Calculator instance = new Calculator();
+        //inserimenti necessari per il funzionamento delle operazioni
+        instance.pushComplex("2+i");
+        instance.pushComplex("33");
+        instance.pushComplex("i8-4");
+        instance.pushComplex("5i");
+        instance.pushComplex("i+1");
+        instance.pushComplex("84");
+        instance.pushComplex("3+i");
+        instance.pushComplex("-7i");
+        instance.pushComplex("64i");
+        instance.pushComplex("5i+3");
+        instance.pushComplex("2");
+        instance.pushComplex("9+4i");
+        instance.pushComplex("19");
+        instance.pushComplex("81i");
+        instance.pushComplex("19+25i");
+        assertEquals(-1, instance.makeOperation(-1));
+        assertEquals(-1, instance.makeOperation(0));
+        assertEquals(1, instance.makeOperation(1));
+        assertEquals(2, instance.makeOperation(2));
+        assertEquals(3, instance.makeOperation(3));
+        assertEquals(4, instance.makeOperation(4));
+        assertEquals(5, instance.makeOperation(5));
+        assertEquals(6, instance.makeOperation(6));
+        assertEquals(-1, instance.makeOperation(7));
     }
 }

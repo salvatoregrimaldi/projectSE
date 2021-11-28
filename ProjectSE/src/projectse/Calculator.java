@@ -211,8 +211,29 @@ public class Calculator {
         return stack.pop();
     }
 
-    public void makeOperation(int id) {
-        //
+    public int makeOperation(int id) {
+        switch (id) {
+            case 1:
+                add();
+                return 1;
+            case 2:
+                subtract();
+                return 2;
+            case 3:
+                multiply();
+                return 3;
+            case 4:
+                divide();
+                return 4;
+            case 5:
+                sqrt();
+                return 5;
+            case 6:
+                negate();
+                return 6;
+            default:
+                return -1;
+        }
     }
 
     public void add() throws NoSuchElementException {
@@ -252,7 +273,7 @@ public class Calculator {
         op = stack.pop();
         stack.push(op.sqrt());
     }
-    
+
     public void negate() throws NoSuchElementException {
         Complex op;
         op = stack.pop();
