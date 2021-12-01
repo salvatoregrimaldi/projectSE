@@ -5,10 +5,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="343.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="722.0" prefWidth="520.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <TextField fx:id="textField" layoutX="17.0" layoutY="14.0" prefHeight="26.0" prefWidth="342.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" />
-      <ListView fx:id="listView" layoutX="88.0" layoutY="257.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="57.0" />
+        <TextField fx:id="textField" layoutX="17.0" layoutY="14.0" prefHeight="26.0" prefWidth="342.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0"/>
+        <ListView fx:id="listView" layoutX="88.0" layoutY="257.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="75.0" />
     </children>
 </AnchorPane>
