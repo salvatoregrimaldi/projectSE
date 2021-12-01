@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author andre
+ * @author Group3
  */
 public class CalculatorTest {
 
@@ -46,7 +46,7 @@ public class CalculatorTest {
      */
     @Test
     public void testPushComplex() {
-        System.out.println("pushComplex");
+        System.out.println("Testing pushComplex");
         Complex[] expectedArray = {
             new Complex(8, 6),
             new Complex(9, 13),
@@ -359,8 +359,10 @@ public class CalculatorTest {
         assertEquals(false, instance.pushComplex("-5.9-3.1"));
         assertEquals(false, instance.pushComplex("-ii5.9-3.1"));
         assertEquals(true, instance.pushComplex("5+3.i"));
-        assertEquals(true, instance.pushComplex("  3  .  1 +  i  "));
-        assertEquals(true, instance.pushComplex(".6i  - 0.88   7"));
+        assertEquals(false, instance.pushComplex("  3  .  1 +  i  "));
+        assertEquals(true, instance.pushComplex("3.1+i"));
+        assertEquals(false, instance.pushComplex(".6i  - 0.88   7"));
+        assertEquals(true, instance.pushComplex(".6i-0.887"));
         assertEquals(false, instance.pushComplex("6.5 ++8i"));
         assertEquals(false, instance.pushComplex("6.5 * 8i"));
         assertEquals(false, instance.pushComplex("3+i5i"));
@@ -516,7 +518,7 @@ public class CalculatorTest {
 
     @Test
     public void testRecognizer() {
-        System.out.println("recognizer");
+        System.out.println("Testing recognizer");
         Calculator instance = new Calculator();
         assertEquals(-1, instance.recognizer("test"));
         assertEquals(-1, instance.recognizer("tre453we"));
@@ -659,8 +661,10 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("-5.9-3.1"));
         assertEquals(-1, instance.recognizer("-ii5.9-3.1"));
         assertEquals(0, instance.recognizer("5+3.i"));
-        assertEquals(0, instance.recognizer("  3  .  1 +  i  "));
-        assertEquals(0, instance.recognizer(".6i  - 0.88   7"));
+        assertEquals(-1, instance.recognizer("  3  .  1 +  i  "));
+        assertEquals(0, instance.recognizer("3.1+i"));
+        assertEquals(-1, instance.recognizer(".6i  - 0.88   7"));
+        assertEquals(0, instance.recognizer(".6i-0.887"));
         assertEquals(-1, instance.recognizer("6.5 ++8i"));
         assertEquals(-1, instance.recognizer("6.5 * 8i"));
         assertEquals(-1, instance.recognizer("3+i5i"));
@@ -821,13 +825,13 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("+ +"));
         assertEquals(-1, instance.recognizer("- -"));
         assertEquals(-1, instance.recognizer("$"));
-        assertEquals(-1, instance.recognizer(" +"));
+        assertEquals(1, instance.recognizer(" +"));
         
     }
 
     @Test
     public void testAdd() {
-        System.out.println("add");
+        System.out.println("Testing add");
         int i = 0, j = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -839,12 +843,8 @@ public class CalculatorTest {
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
-                System.out.println(array[i] + " +");
-                System.out.println(array[j]);
                 instance.pushComplex(array[j].toString());
                 instance.add();
-                System.out.println("result: " + instance.getStack().getFirst());
-                System.out.println("\n");
                 assertEquals(array[i].add(array[j]), instance.getStack().pop());
                 j++;
                 instance.pushComplex(array[i].toString());
@@ -856,7 +856,7 @@ public class CalculatorTest {
 
     @Test
     public void testSubtract() {
-        System.out.println("subtract");
+        System.out.println("Testing subtract");
         int i = 0, j = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -868,12 +868,8 @@ public class CalculatorTest {
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
-                System.out.println(array[i] + " -");
-                System.out.println(array[j]);
                 instance.pushComplex(array[j].toString());
                 instance.subtract();
-                System.out.println("result: " + instance.getStack().getFirst());
-                System.out.println("\n");
                 assertEquals(array[i].subtract(array[j]), instance.getStack().pop());
                 j++;
                 instance.pushComplex(array[i].toString());
@@ -885,7 +881,7 @@ public class CalculatorTest {
 
     @Test
     public void testMultiply() {
-        System.out.println("multiply");
+        System.out.println("Testing multiply");
         int i = 0, j = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -897,12 +893,8 @@ public class CalculatorTest {
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
-                System.out.println(array[i] + " *");
-                System.out.println(array[j]);
                 instance.pushComplex(array[j].toString());
                 instance.multiply();
-                System.out.println("result: " + instance.getStack().getFirst());
-                System.out.println("\n");
                 assertEquals(array[i].multiply(array[j]), instance.getStack().pop());
                 j++;
                 instance.pushComplex(array[i].toString());
@@ -914,7 +906,7 @@ public class CalculatorTest {
 
     @Test
     public void testDivide() {
-        System.out.println("divide");
+        System.out.println("Testing divide");
         int i = 0, j = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -926,12 +918,8 @@ public class CalculatorTest {
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
-                System.out.println(array[i] + " /");
-                System.out.println(array[j]);
                 instance.pushComplex(array[j].toString());
                 instance.divide();
-                System.out.println("result: " + instance.getStack().getFirst());
-                System.out.println("\n");
                 assertEquals(array[i].divide(array[j]), instance.getStack().pop());
                 j++;
                 instance.pushComplex(array[i].toString());
@@ -943,7 +931,7 @@ public class CalculatorTest {
 
     @Test
     public void testSqrt() {
-        System.out.println("sqrt");
+        System.out.println("Testing sqrt");
         int i = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -953,11 +941,8 @@ public class CalculatorTest {
             new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
             new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
-            System.out.println(array[i] + " sqrt");
             instance.pushComplex(array[i].toString());
             instance.sqrt();
-            System.out.println("result: " + instance.getStack().getFirst());
-            System.out.println("\n");
             assertEquals(array[i].sqrt(), instance.getStack().pop());
             i++;
         }
@@ -965,7 +950,7 @@ public class CalculatorTest {
 
     @Test
     public void testNegate() {
-        System.out.println("negate");
+        System.out.println("Testing negate");
         int i = 0;
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -975,11 +960,8 @@ public class CalculatorTest {
             new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
             new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
-            System.out.println(array[i] + " negate");
             instance.pushComplex(array[i].toString());
             instance.negate();
-            System.out.println("result: " + instance.getStack().getFirst());
-            System.out.println("\n");
             assertEquals(array[i].negate(), instance.getStack().pop());
             i++;
         }
@@ -987,7 +969,7 @@ public class CalculatorTest {
 
     @Test
     public void testMakeOperation() {
-        System.out.println("make operation");
+        System.out.println("Testing makeOperation");
         Calculator instance = new Calculator();
         //inserimenti necessari per il funzionamento delle operazioni
         instance.pushComplex("2+i");
