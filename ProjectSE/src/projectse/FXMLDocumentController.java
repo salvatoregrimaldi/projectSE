@@ -7,7 +7,10 @@ package projectse;
 
 import com.vm.jcomplex.Complex;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
@@ -45,12 +48,27 @@ public class FXMLDocumentController implements Initializable {
                     if (empty) {
                         setText(null);
                     } else {
-                        setText(c.toString());
-                        /*if (c.getImaginary() >= 0) {
-                            setText(String.format("%.5f" + "+" + "%.5f", c.getReal(), c.getImaginary()));
+                        DecimalFormat objFormat = new DecimalFormat("0.########", new DecimalFormatSymbols(Locale.ENGLISH));
+                        String real = objFormat.format(Double.parseDouble(String.valueOf(c.getReal())));
+                        String imaginary = objFormat.format(Double.parseDouble(String.valueOf(c.getImaginary())));
+                        if (imaginary.equals("0")) {
+                            setText(real);
                         } else {
-                            setText(String.format("%.5f" + "%.5f", c.getReal(), c.getImaginary()));
-                        }*/
+                            if (c.getImaginary() == 1) {
+                                imaginary = "";
+                            } else if (c.getImaginary() == -1) {
+                                imaginary = "-";
+                            }
+                            if (real.equals("0")) {
+                                setText(imaginary + "i");
+                            } else {
+                                if (c.getImaginary() < 0.0) {
+                                    setText(real + imaginary + "i");
+                                } else {
+                                    setText(real + "+" + imaginary + "i");
+                                }
+                            }
+                        }
                     }
                 }
             };
