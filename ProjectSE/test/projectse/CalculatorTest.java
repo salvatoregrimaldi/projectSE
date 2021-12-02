@@ -940,7 +940,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testMultiply() {
+    public void testMultiplyOperands() {
         int i = 0, j = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -954,6 +954,30 @@ public class CalculatorTest {
             j = 0;
             i++;
         }
+    }
+
+    @Test
+    public void testMultiplyFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        Complex app = array[i];
+        while (i > 0) {
+            app = array[i - 1].multiply(app);
+            instance.multiply();
+            assertEquals(instance.getStack().getFirst(), app);
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testMultiplyExceptions() {
+        instance.multiply();
+        instance.pushComplex("24+2i");
+        instance.multiply();
     }
 
     @Test
@@ -1029,7 +1053,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testNegate() {
+    public void testNegateOperands() {
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1037,6 +1061,26 @@ public class CalculatorTest {
             assertEquals(array[i].negate(), instance.getStack().pop());
             i++;
         }
+    }
+
+    @Test
+    public void testNegateFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        while (i >= 0) {
+            instance.negate();
+            assertEquals(instance.getStack().pop(), array[i].negate());
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testNegateExceptions() {
+        instance.negate();
     }
 
     @Test
