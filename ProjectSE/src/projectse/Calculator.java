@@ -110,7 +110,7 @@ public class Calculator {
                 return 5;
             case "+-":
                 return 6;
-             case "clear":
+            case "clear":
                 return 7;
             case "drop":
                 return 8;
@@ -281,6 +281,9 @@ public class Calculator {
     }
 
     public void subtract() throws NoSuchElementException {
+        if (stack.size() < 2) {
+            throw new NoSuchElementException();
+        }
         Complex op1, op2, result;
         op2 = stack.pop();
         op1 = stack.pop();
@@ -340,11 +343,14 @@ public class Calculator {
     }
 
     public void over() throws NoSuchElementException {
-        Complex c1, c2;
-        c1 = stack.pop();
-        c2 = stack.getFirst();
-        stack.push(c1);
-        stack.push(c2);
+        if (stack.size() < 2) {
+            throw new NoSuchElementException();
+        }
+        Complex op1, op2;
+        op1 = stack.pop();
+        op2 = stack.getFirst();
+        stack.push(op1);
+        stack.push(op2);
     }
 
 }
