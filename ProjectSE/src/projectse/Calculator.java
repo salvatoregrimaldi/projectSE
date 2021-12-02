@@ -300,8 +300,8 @@ public class Calculator {
         op = stack.getFirst();
         stack.push(op);
     }
-    
-    public void swap() throws NoSuchElementException{
+
+    public void swap() throws NoSuchElementException {
         Complex c1;
         Complex c2;
         c1 = stack.pop();
@@ -309,8 +309,17 @@ public class Calculator {
         stack.push(c1);
         stack.push(c2);
     }
-    
+
     public void clear() {
         stack.clear();
     }
+
+    public void over() throws NoSuchElementException {
+        Complex c1, c2;
+        c1 = stack.pop();
+        c2 = stack.getFirst();
+        stack.push(c1);
+        stack.push(c2);
+    }
+
 }

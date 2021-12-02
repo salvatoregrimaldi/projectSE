@@ -1055,9 +1055,8 @@ public class CalculatorTest {
         Calculator instance = new Calculator();
         instance.dup();
     }
-    
-    
-@Test
+
+    @Test
     public void testSwap() {
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -1087,8 +1086,8 @@ public class CalculatorTest {
         instance.pushComplex("24+2i");
         instance.swap();
     }
-    
-        @Test
+
+    @Test
     public void testClear() {
         Calculator instance = new Calculator();
         Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
@@ -1097,7 +1096,7 @@ public class CalculatorTest {
             new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
             new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
             new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
-        
+
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1110,6 +1109,37 @@ public class CalculatorTest {
         assertEquals(true, instance.getStack().isEmpty());
         instance.clear();
         assertEquals(true, instance.getStack().isEmpty());
+    }
+
+    @Test
+    public void testOver() {
+        Calculator instance = new Calculator();
+        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
+            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
+            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
+            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
+            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        while (i > 0) {
+            instance.over();
+            assertEquals(instance.getStack().pop(), array[i - 1]);
+            instance.getStack().pop();
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testOverExceptions() {
+        Calculator instance = new Calculator();
+        instance.dup();
+        instance.pushComplex("24+2i");
+        instance.swap();
     }
 
 }
