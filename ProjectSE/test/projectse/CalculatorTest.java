@@ -899,7 +899,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testSubtract() {
+    public void testSubtractOperands() {
         int i = 0, j = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -913,6 +913,30 @@ public class CalculatorTest {
             j = 0;
             i++;
         }
+    }
+
+    @Test
+    public void testSubtractFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        Complex app = array[i];
+        while (i > 0) {
+            app = array[i - 1].subtract(app);
+            instance.subtract();
+            assertEquals(instance.getStack().getFirst(), app);
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testSubtractExceptions() {
+        instance.subtract();
+        instance.pushComplex("24+2i");
+        instance.subtract();
     }
 
     @Test
@@ -974,7 +998,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testSqrt() {
+    public void testSqrtOperands() {
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -982,6 +1006,26 @@ public class CalculatorTest {
             assertEquals(array[i].sqrt(), instance.getStack().pop());
             i++;
         }
+    }
+
+    @Test
+    public void testSqrtFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        while (i >= 0) {
+            instance.sqrt();
+            assertEquals(instance.getStack().pop(), array[i].sqrt());
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testSqrtExceptions() {
+        instance.sqrt();
     }
 
     @Test
