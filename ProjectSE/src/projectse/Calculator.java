@@ -110,6 +110,16 @@ public class Calculator {
                 return 5;
             case "+-":
                 return 6;
+             case "clear":
+                return 7;
+            case "drop":
+                return 8;
+            case "dup":
+                return 9;
+            case "swap":
+                return 10;
+            case "over":
+                return 11;
         }
         return -1;
     }

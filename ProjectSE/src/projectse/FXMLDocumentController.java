@@ -10,7 +10,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
@@ -36,7 +35,7 @@ public class FXMLDocumentController implements Initializable {
     private Calculator calc;
     private String input = "";
     private int id;
-    public static final int N_OP = 6;
+    public static final int N_OP = 11;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

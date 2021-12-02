@@ -827,6 +827,19 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("- -"));
         assertEquals(-1, instance.recognizer("$"));
         assertEquals(1, instance.recognizer(" +"));
+        
+        //test per le stack operations       
+        assertEquals(7, instance.recognizer("clear"));        
+        assertEquals(8, instance.recognizer("drop"));
+        assertEquals(9, instance.recognizer("dup"));
+        assertEquals(10, instance.recognizer("swap"));
+        assertEquals(11, instance.recognizer("over"));
+        
+        assertEquals(-1, instance.recognizer("cle ar"));        
+        assertEquals(-1, instance.recognizer("dr op"));
+        assertEquals(-1, instance.recognizer("d up"));
+        assertEquals(-1, instance.recognizer("swa p"));
+        assertEquals(-1, instance.recognizer("ov er"));
 
     }
 
