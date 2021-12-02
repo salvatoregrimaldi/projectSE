@@ -273,7 +273,7 @@ public class Calculator {
     }
 
     public void add() throws NoSuchElementException {
-        if(stack.size() < 2){
+        if (stack.size() < 2) {
             throw new NoSuchElementException();
         }
         Complex op1, op2, result;
@@ -295,6 +295,9 @@ public class Calculator {
     }
 
     public void multiply() throws NoSuchElementException {
+        if (stack.size() < 2) {
+            throw new NoSuchElementException();
+        }
         Complex op1, op2, result;
         op2 = stack.pop();
         op1 = stack.pop();
@@ -303,7 +306,7 @@ public class Calculator {
     }
 
     public void divide() throws NoSuchElementException {
-        if(stack.size() < 2){
+        if (stack.size() < 2) {
             throw new NoSuchElementException();
         }
         Complex op1, op2, result;
@@ -340,12 +343,14 @@ public class Calculator {
     }
 
     public void swap() throws NoSuchElementException {
-        Complex c1;
-        Complex c2;
-        c1 = stack.pop();
-        c2 = stack.pop();
-        stack.push(c1);
-        stack.push(c2);
+        if (stack.size() < 2) {
+            throw new NoSuchElementException();
+        }
+        Complex op1, op2;
+        op1 = stack.pop();
+        op2 = stack.pop();
+        stack.push(op1);
+        stack.push(op2);
     }
 
     public void over() throws NoSuchElementException {
