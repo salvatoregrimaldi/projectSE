@@ -1028,4 +1028,32 @@ public class CalculatorTest {
         instance.drop();
     }
 
+    @Test
+    public void testDup() {
+        Calculator instance = new Calculator();
+        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
+            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
+            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
+            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
+            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        while (i >= 0) {
+            instance.dup();
+            assertEquals(instance.getStack().pop(), instance.getStack().pop());
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testDupExceptions() {
+        Calculator instance = new Calculator();
+        instance.dup();
+    }
+
 }

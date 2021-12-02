@@ -295,4 +295,9 @@ public class Calculator {
         stack.pop();
     }
 
+    public void dup() throws NoSuchElementException {
+        Complex op;
+        op = stack.getFirst();
+        stack.push(op);
+    }
 }
