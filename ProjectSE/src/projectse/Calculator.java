@@ -273,6 +273,9 @@ public class Calculator {
     }
 
     public void add() throws NoSuchElementException {
+        if(stack.size() < 2){
+            throw new NoSuchElementException();
+        }
         Complex op1, op2, result;
         op2 = stack.pop();
         op1 = stack.pop();
@@ -300,6 +303,9 @@ public class Calculator {
     }
 
     public void divide() throws NoSuchElementException {
+        if(stack.size() < 2){
+            throw new NoSuchElementException();
+        }
         Complex op1, op2, result;
         op2 = stack.pop();
         op1 = stack.pop();
