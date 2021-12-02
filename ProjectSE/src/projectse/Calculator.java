@@ -242,6 +242,21 @@ public class Calculator {
             case 6:
                 negate();
                 return 6;
+            case 7:
+                clear();
+                return 7;
+            case 8:
+                drop();
+                return 8;
+            case 9:
+                dup();
+                return 9;
+            case 10:
+                swap();
+                return 10;
+            case 11:
+                over();
+                return 11;
             default:
                 return -1;
         }
@@ -291,6 +306,10 @@ public class Calculator {
         stack.push(op.negate());
     }
 
+    public void clear() {
+        stack.clear();
+    }
+
     public void drop() throws NoSuchElementException {
         stack.pop();
     }
@@ -308,10 +327,6 @@ public class Calculator {
         c2 = stack.pop();
         stack.push(c1);
         stack.push(c2);
-    }
-
-    public void clear() {
-        stack.clear();
     }
 
     public void over() throws NoSuchElementException {
