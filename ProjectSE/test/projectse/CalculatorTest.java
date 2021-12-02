@@ -858,7 +858,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testAdd() {
+    public void testAddOperands() {
         int i = 0, j = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -872,6 +872,30 @@ public class CalculatorTest {
             j = 0;
             i++;
         }
+    }
+
+    @Test
+    public void testAddFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        Complex app = array[i];
+        while (i > 0) {
+            app = array[i - 1].add(app);
+            instance.add();
+            assertEquals(instance.getStack().getFirst(), app);
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testAddExceptions() {
+        instance.add();
+        instance.pushComplex("24+2i");
+        instance.add();
     }
 
     @Test
@@ -909,7 +933,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testDivide() {
+    public void testDivideOperands() {
         int i = 0, j = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -923,6 +947,30 @@ public class CalculatorTest {
             j = 0;
             i++;
         }
+    }
+
+    @Test
+    public void testDivideFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        Complex app = array[i];
+        while (i > 0) {
+            app = array[i - 1].divide(app);
+            instance.divide();
+            assertEquals(instance.getStack().getFirst(), app);
+            i--;
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testDivideExceptions() {
+        instance.divide();
+        instance.pushComplex("24+2i");
+        instance.divide();
     }
 
     @Test
