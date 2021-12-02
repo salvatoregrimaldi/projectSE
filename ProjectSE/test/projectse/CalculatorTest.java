@@ -23,6 +23,9 @@ import static org.junit.Assert.*;
  */
 public class CalculatorTest {
 
+    Calculator instance;
+    Complex[] array;
+
     public CalculatorTest() {
     }
 
@@ -36,6 +39,24 @@ public class CalculatorTest {
 
     @Before
     public void setUp() {
+        instance = new Calculator();
+        array = new Complex[]{
+            new Complex(0, 0), new Complex(0.0, 0.0), new Complex(0, 1), new Complex(0, -1),
+            new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0, 3), new Complex(0, -3),
+            new Complex(0.0, 1.0), new Complex(0.0, -1.0), new Complex(5, 3), new Complex(-5, -3),
+            new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0),
+            new Complex(1, 1), new Complex(1, 0), new Complex(-1, -1), new Complex(-1, 0),
+            new Complex(1, -1), new Complex(-1, 1), new Complex(5.0, 3.0), new Complex(-5.0, -3.0),
+            new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0),
+            new Complex(-5.0, 0.0), new Complex(1.0, 1.0), new Complex(1.0, 0.0),
+            new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0),
+            new Complex(-1.0, 0.0), new Complex(5.7, 3.7), new Complex(-5.7, -3.7),
+            new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7),
+            new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7),
+            new Complex(0.7, 0.7), new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7),
+            new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7),
+            new Complex(-1.7, 0.7), new Complex(0.7, -1.7)
+        };
     }
 
     @After
@@ -47,7 +68,6 @@ public class CalculatorTest {
      */
     @Test
     public void testPushComplex() {
-        System.out.println("Testing pushComplex");
         Complex[] expectedArray = {
             new Complex(8, 6),
             new Complex(9, 13),
@@ -213,7 +233,6 @@ public class CalculatorTest {
             new Complex(0, 9.),
             new Complex(0, .9)};
 
-        Calculator instance = new Calculator();
         //test iniziale
         assertEquals(true, instance.pushComplex("8+6i"));
         assertEquals(true, instance.pushComplex("9+13i"));
@@ -513,14 +532,10 @@ public class CalculatorTest {
         List<Complex> list = Arrays.asList(expectedArray);
         Collections.reverse(list);
         assertArrayEquals(list.toArray(), instance.getStack().toArray());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     @Test
     public void testRecognizer() {
-        System.out.println("Testing recognizer");
-        Calculator instance = new Calculator();
         assertEquals(-1, instance.recognizer("test"));
         assertEquals(-1, instance.recognizer("tre453we"));
         assertEquals(0, instance.recognizer("23.34"));
@@ -827,33 +842,24 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("- -"));
         assertEquals(-1, instance.recognizer("$"));
         assertEquals(1, instance.recognizer(" +"));
-        
+
         //test per le stack operations       
-        assertEquals(7, instance.recognizer("clear"));        
+        assertEquals(7, instance.recognizer("clear"));
         assertEquals(8, instance.recognizer("drop"));
         assertEquals(9, instance.recognizer("dup"));
         assertEquals(10, instance.recognizer("swap"));
         assertEquals(11, instance.recognizer("over"));
-        
-        assertEquals(-1, instance.recognizer("cle ar"));        
+
+        assertEquals(-1, instance.recognizer("cle ar"));
         assertEquals(-1, instance.recognizer("dr op"));
         assertEquals(-1, instance.recognizer("d up"));
         assertEquals(-1, instance.recognizer("swa p"));
         assertEquals(-1, instance.recognizer("ov er"));
-
     }
 
     @Test
     public void testAdd() {
-        System.out.println("Testing add");
         int i = 0, j = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
@@ -870,15 +876,7 @@ public class CalculatorTest {
 
     @Test
     public void testSubtract() {
-        System.out.println("Testing subtract");
         int i = 0, j = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
@@ -895,15 +893,7 @@ public class CalculatorTest {
 
     @Test
     public void testMultiply() {
-        System.out.println("Testing multiply");
         int i = 0, j = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
@@ -920,15 +910,7 @@ public class CalculatorTest {
 
     @Test
     public void testDivide() {
-        System.out.println("Testing divide");
         int i = 0, j = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             for (Complex y : array) {
@@ -945,15 +927,7 @@ public class CalculatorTest {
 
     @Test
     public void testSqrt() {
-        System.out.println("Testing sqrt");
         int i = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             instance.sqrt();
@@ -964,15 +938,7 @@ public class CalculatorTest {
 
     @Test
     public void testNegate() {
-        System.out.println("Testing negate");
         int i = 0;
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             instance.negate();
@@ -983,14 +949,6 @@ public class CalculatorTest {
 
     @Test
     public void testClear() {
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
-
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1007,13 +965,6 @@ public class CalculatorTest {
 
     @Test
     public void testDrop() {
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1030,19 +981,11 @@ public class CalculatorTest {
 
     @Test(expected = NoSuchElementException.class)
     public void testDropExceptions() {
-        Calculator instance = new Calculator();
         instance.drop();
     }
 
     @Test
     public void testDup() {
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1058,19 +1001,11 @@ public class CalculatorTest {
 
     @Test(expected = NoSuchElementException.class)
     public void testDupExceptions() {
-        Calculator instance = new Calculator();
         instance.dup();
     }
 
     @Test
     public void testSwap() {
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1087,7 +1022,6 @@ public class CalculatorTest {
 
     @Test(expected = NoSuchElementException.class)
     public void testSwapExceptions() {
-        Calculator instance = new Calculator();
         instance.swap();
         instance.pushComplex("24+2i");
         instance.swap();
@@ -1095,13 +1029,6 @@ public class CalculatorTest {
 
     @Test
     public void testOver() {
-        Calculator instance = new Calculator();
-        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
-            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
-            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
-            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
-            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
-            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
         int i = 0;
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
@@ -1118,7 +1045,6 @@ public class CalculatorTest {
 
     @Test(expected = NoSuchElementException.class)
     public void testOverExceptions() {
-        Calculator instance = new Calculator();
         instance.dup();
         instance.pushComplex("24+2i");
         instance.swap();
@@ -1126,8 +1052,6 @@ public class CalculatorTest {
 
     @Test
     public void testMakeOperation() {
-        System.out.println("Testing makeOperation");
-        Calculator instance = new Calculator();
         //inserimenti necessari per il funzionamento delle operazioni
         instance.pushComplex("2+i");
         instance.pushComplex("33");
@@ -1168,7 +1092,6 @@ public class CalculatorTest {
         assertEquals(-1, instance.makeOperation(14));
         assertEquals(-1, instance.makeOperation(100));
         assertEquals(7, instance.makeOperation(7));
-
     }
 
 }
