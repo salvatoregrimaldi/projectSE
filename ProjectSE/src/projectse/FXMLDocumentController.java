@@ -35,6 +35,7 @@ public class FXMLDocumentController implements Initializable {
     private Calculator calc;
     private String input = "";
     private int id;
+    private boolean flag = false;
     public static final int N_OP = 11;
 
     @Override
@@ -84,6 +85,12 @@ public class FXMLDocumentController implements Initializable {
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
+                if (flag == true) {
+                    String app = ke.getCharacter();
+                    textField.clear();
+                    textField.setText(app);
+                    flag = false;
+                }
                 if (ke.getCode().equals(KeyCode.ENTER) && !textField.getText().equals("")) {
                     input = textField.getText();
                     textField.clear();
@@ -94,10 +101,13 @@ public class FXMLDocumentController implements Initializable {
                         try {
                             calc.makeOperation(id);
                         } catch (NoSuchElementException e) {
+                            textField.setText("Not Enough Elements Error");
+                            flag = true;
                             return;
                         }
                     } else if (id == -1) {
                         textField.setText("Syntax Error");
+                        flag = true;
                     }
                     listView.getItems().clear();
                     al.clear();
