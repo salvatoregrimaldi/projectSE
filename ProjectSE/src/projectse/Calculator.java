@@ -309,4 +309,8 @@ public class Calculator {
         stack.push(c1);
         stack.push(c2);
     }
+    
+    public void clear() {
+        stack.clear();
+    }
 }
