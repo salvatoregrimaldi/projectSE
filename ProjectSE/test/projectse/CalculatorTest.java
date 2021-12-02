@@ -9,6 +9,7 @@ import com.vm.jcomplex.Complex;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -808,14 +809,14 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("7.9.i7"));
         assertEquals(-1, instance.recognizer("i.."));
         assertEquals(-1, instance.recognizer("i.7."));
-        
+
         assertEquals(1, instance.recognizer("+"));
         assertEquals(2, instance.recognizer("-"));
         assertEquals(3, instance.recognizer("*"));
         assertEquals(4, instance.recognizer("/"));
         assertEquals(5, instance.recognizer("sqrt"));
         assertEquals(6, instance.recognizer("+-"));
-        
+
         assertEquals(-1, instance.recognizer("++"));
         assertEquals(-1, instance.recognizer("--"));
         assertEquals(-1, instance.recognizer("+--"));
@@ -826,7 +827,7 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("- -"));
         assertEquals(-1, instance.recognizer("$"));
         assertEquals(1, instance.recognizer(" +"));
-        
+
     }
 
     @Test
@@ -997,6 +998,34 @@ public class CalculatorTest {
         assertEquals(6, instance.makeOperation(6));
         assertEquals(-1, instance.makeOperation(7));
     }
-    
+
+    @Test
+    public void testDrop() {
+        Calculator instance = new Calculator();
+        Complex array[] = {new Complex(5, 3), new Complex(-5, -3), new Complex(5, -3), new Complex(-5, 3), new Complex(5, 0), new Complex(-5, 0), new Complex(0, 3), new Complex(0, -3), new Complex(0, 0),
+            new Complex(1, 1), new Complex(1, 0), new Complex(0, 1), new Complex(-1, -1), new Complex(-1, 0), new Complex(0, -1), new Complex(1, -1), new Complex(-1, 1),
+            new Complex(5.0, 3.0), new Complex(-5.0, -3.0), new Complex(5.0, -3.0), new Complex(-5.0, 3.0), new Complex(5.0, 0.0), new Complex(-5.0, 0.0), new Complex(0.0, 3.0), new Complex(0.0, -3.0), new Complex(0.0, 0.0),
+            new Complex(1.0, 1.0), new Complex(1.0, 0.0), new Complex(0.0, 1.0), new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0), new Complex(-1.0, 0.0), new Complex(0.0, -1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7), new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7), new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7), new Complex(0.7, 0.7),
+            new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7), new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7), new Complex(-1.7, 0.7), new Complex(0.7, -1.7)};
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(array[i].toString());
+            i++;
+        }
+        i--;
+        while (i >= 0) {
+            assertEquals(instance.getStack().getFirst(), array[i]);
+            instance.drop();
+            i--;
+        }
+        assertEquals(true, instance.getStack().isEmpty());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testDropExceptions() {
+        Calculator instance = new Calculator();
+        instance.drop();
+    }
 
 }

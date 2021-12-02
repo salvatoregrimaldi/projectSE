@@ -48,7 +48,12 @@ public class FXMLDocumentController implements Initializable {
                     if (empty) {
                         setText(null);
                     } else {
-                        DecimalFormat objFormat = new DecimalFormat("0.########", new DecimalFormatSymbols(Locale.ENGLISH));
+                        DecimalFormatSymbols personal = new DecimalFormatSymbols();
+                        personal.setDecimalSeparator('.');
+                        personal.setGroupingSeparator('\'');
+                        DecimalFormat objFormat = new DecimalFormat("0.########", personal);
+                        objFormat.setGroupingSize(3);
+                        objFormat.setGroupingUsed(true);
                         String real = objFormat.format(Double.parseDouble(String.valueOf(c.getReal())));
                         String imaginary = objFormat.format(Double.parseDouble(String.valueOf(c.getImaginary())));
                         if (imaginary.equals("0")) {

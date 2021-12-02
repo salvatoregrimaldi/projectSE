@@ -290,4 +290,9 @@ public class Calculator {
         op = stack.pop();
         stack.push(op.negate());
     }
+
+    public void drop() throws NoSuchElementException {
+        stack.pop();
+    }
+
 }
