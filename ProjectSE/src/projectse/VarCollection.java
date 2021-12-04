@@ -49,4 +49,22 @@ public class VarCollection<E> {
             }
         };
     }
+    
+    public E getVar(Character c) throws UnacceptableKeyException{
+        if (c == null || c < 'a' || c > 'z') {
+            throw new UnacceptableKeyException();
+        }
+        return collect.get(c);
+    }
+
+    public void setVar(Character c, E v) throws UnacceptableKeyException{
+        if (c == null || c < 'a' || c > 'z') {
+            throw new UnacceptableKeyException();
+        }
+        this.collect.replace(c, v);
+    }
+    
+    public Map<Character, E> getCollect() {
+        return collect;
+    }
 }
