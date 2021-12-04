@@ -17,13 +17,19 @@ import java.util.NoSuchElementException;
 public class Calculator {
 
     private Deque<Complex> stack;
+    private VarCollection<Complex> vars;
 
     public Calculator() {
         stack = new ArrayDeque<Complex>();
+        vars = new VarCollection<>();
     }
 
     public Deque<Complex> getStack() {
         return stack;
+    }
+
+    public VarCollection<Complex> getVars() {
+        return vars;
     }
 
     private boolean isReal(String input) {
@@ -360,6 +366,10 @@ public class Calculator {
         op2 = stack.getFirst();
         stack.push(op1);
         stack.push(op2);
+    }
+
+    public Complex showVar(char c) throws UnacceptableKeyException {
+        return vars.getVar(c);
     }
 
 }

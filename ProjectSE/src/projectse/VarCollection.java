@@ -67,4 +67,9 @@ public class VarCollection<E> {
     public Map<Character, E> getCollect() {
         return collect;
     }
+    
+    @Override
+    public String toString() {
+        return "VarCollection =" + collect;
+    }
 }
