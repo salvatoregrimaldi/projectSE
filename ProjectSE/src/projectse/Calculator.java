@@ -36,7 +36,6 @@ public class Calculator {
     }
 
     private boolean isImaginary(String input) {
-        input = input.trim();
         if (input.charAt(0) == '+' || input.charAt(0) == '-') {
             input = input.substring(1);
         }
@@ -55,7 +54,6 @@ public class Calculator {
     }
 
     private boolean isComplex(String input) {
-        input = input.trim();
         if (input.contains(" ")) {
             return false;
         }
@@ -93,10 +91,10 @@ public class Calculator {
     }
 
     public int recognizer(String input) {
+        input = input.trim();
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
         }
-        input = input.trim();
         switch (input) {
             case "+":
                 return 1;
@@ -128,7 +126,7 @@ public class Calculator {
         String swap;
         int firstSign = 1;
         int secondSign = 1;
-        //number = number.replace(" ", "");
+        number = number.trim();
 
         if (isReal(number)) {
             if (number.matches("-0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
