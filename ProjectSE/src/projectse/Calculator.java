@@ -98,6 +98,9 @@ public class Calculator {
 
     public int recognizer(String input) {
         input = input.trim();
+        if (input.matches("show [a-z]")) {
+            return 12;
+        }
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
         }

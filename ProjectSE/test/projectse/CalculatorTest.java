@@ -855,6 +855,26 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("d up"));
         assertEquals(-1, instance.recognizer("swa p"));
         assertEquals(-1, instance.recognizer("ov er"));
+        
+        //test per le var operations
+        
+        for (char x = 'a'; x <= 'z'; x++) {
+            assertEquals(12, instance.recognizer("show " + x));
+        //continuare qui
+        }
+        
+        for (char x = 0; x <= 96; x++) {
+            assertEquals(-1, instance.recognizer("show " + x));
+        }
+        for (char x = 123; x <= 127; x++) {
+            assertEquals(-1, instance.recognizer("show" + x));
+        }
+        assertEquals(-1, instance.recognizer("show" + "  %"));
+        assertEquals(-1, instance.recognizer("show" + "  +"));
+        assertEquals(-1, instance.recognizer("show" + "  -"));
+        assertEquals(-1, instance.recognizer("show" + "  /"));
+        assertEquals(-1, instance.recognizer("show" + "  9"));
+        assertEquals(-1, instance.recognizer("show" + "  0"));
     }
 
     @Test
