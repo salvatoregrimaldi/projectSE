@@ -1370,5 +1370,65 @@ public class CalculatorTest {
             instance.pushToVar(x);
         }
     }
+    
+    @Test
+    public void testPullFromVar() {
+        for (char x = 'a'; x <= 'z'; x++) {
+            for (Complex y : array) {
+                instance.getVars().setVar(x, y);
+                instance.pullFromVar(x);
+                assertEquals(instance.getVars().getVar(x), instance.getStack().pop());
+                System.out.println(instance.getStack());
+            }
+        }
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testPullFromVarExceptions1() {
+        instance.pushComplex("3+5i");
+        instance.pullFromVar('0');
+        instance.pullFromVar('1');
+        instance.pullFromVar('2');
+        instance.pullFromVar('3');
+        instance.pullFromVar('4');
+        instance.pullFromVar('5');
+        instance.pullFromVar('6');
+        instance.pullFromVar('7');
+        instance.pullFromVar('8');
+        instance.pullFromVar('9');
+        instance.pullFromVar('!');
+        instance.pullFromVar('"');
+        instance.pullFromVar('£');
+        instance.pullFromVar('$');
+        instance.pullFromVar('%');
+        instance.pullFromVar('&');
+        instance.pullFromVar('/');
+        instance.pullFromVar('(');
+        instance.pullFromVar(')');
+        instance.pullFromVar('=');
+        instance.pullFromVar('?');
+        instance.pullFromVar('à');
+        instance.pullFromVar('è');
+        instance.pullFromVar('ì');
+        instance.pullFromVar('ò');
+        instance.pullFromVar('ù');
+        instance.pullFromVar('+');
+        instance.pullFromVar('-');
+        instance.pullFromVar('*');
+        instance.pullFromVar('\\');
+        instance.pullFromVar(' ');
+        instance.pullFromVar('\t');
+        instance.pullFromVar('\n');
+        instance.pullFromVar('\r');
+        instance.pullFromVar('.');
+        instance.pullFromVar(',');
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testPullFromVarExceptions2() {
+        for (char x = 'a'; x <= 'z'; x++) {
+            instance.pullFromVar(x);
+        }
+    }
 
 }

@@ -378,5 +378,9 @@ public class Calculator {
     public void pushToVar(char c) throws UnacceptableKeyException, NoSuchElementException {
         vars.setVar(c, stack.pop());
     }
+    
+    public void pullFromVar(char c) throws UnacceptableKeyException, NullPointerException {
+        stack.push(vars.getVar(c));
+    }
 
 }
