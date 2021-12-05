@@ -105,6 +105,15 @@ public class FXMLDocumentController implements Initializable {
                             flag = true;
                             return;
                         }
+                    } else if (id == 12) {
+                        input = input.trim();
+                        try {
+                            textField.setText(calc.showVar(input.charAt(input.length() - 1)).toString());
+                        } catch (NullPointerException e) {      //lanciata dalla toString() quando la variabile ha valore null
+                            textField.setText("null");
+                        }
+                        flag = true;
+                        return;
                     } else if (id == -1) {
                         textField.setText("Syntax Error");
                         flag = true;

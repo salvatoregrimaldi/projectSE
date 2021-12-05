@@ -374,5 +374,9 @@ public class Calculator {
     public Complex showVar(char c) throws UnacceptableKeyException {
         return vars.getVar(c);
     }
+    
+    public void pushToVar(char c) throws UnacceptableKeyException, NoSuchElementException {
+        vars.setVar(c, stack.pop());
+    }
 
 }
