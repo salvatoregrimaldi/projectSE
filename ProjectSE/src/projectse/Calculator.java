@@ -344,7 +344,14 @@ public class Calculator {
     public void negate() throws NoSuchElementException {
         Complex op;
         op = stack.pop();
-        stack.push(op.negate());
+        Complex app = op.negate();
+        if (app.getReal() == -0.0) {
+            app = new Complex(0, app.getImaginary());
+        }
+        if(app.getImaginary() == -0.0){
+            app = new Complex(app.getReal(), 0);
+        }
+        stack.push(app);
     }
 
     public void clear() {

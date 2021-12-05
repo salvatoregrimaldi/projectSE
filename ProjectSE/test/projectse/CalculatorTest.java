@@ -1117,22 +1117,114 @@ public class CalculatorTest {
         for (Complex x : array) {
             instance.pushComplex(array[i].toString());
             instance.negate();
-            assertEquals(array[i].negate(), instance.getStack().pop());
+            //test dei numeri non pur. reali e non pur. immaginari
+            if (!(x.getReal() == 0.0 || x.getImaginary() == 0.0)) {
+                assertEquals(array[i].negate(), instance.getStack().pop());
+            }
             i++;
         }
+
+        instance.pushComplex("3");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(-3, 0));
+        instance.pushComplex("3i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, -3));
+
+        instance.pushComplex("-3");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(3, 0));
+        instance.pushComplex("-3i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 3));
+
+        instance.pushComplex("3.0");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(-3.0, 0));
+        instance.pushComplex("3.0i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, -3.0));
+
+        instance.pushComplex("-3.0");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(3.0, 0));
+        instance.pushComplex("-3.0i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 3.0));
+
+        instance.pushComplex("3.7");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(-3.7, 0));
+        instance.pushComplex("3.7i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, -3.7));
+
+        instance.pushComplex("-3.7");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(3.7, 0));
+        instance.pushComplex("-3.7i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 3.7));
+
+        instance.pushComplex("1");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(-1, 0));
+        instance.pushComplex("i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, -1));
+
+        instance.pushComplex("-1");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(1, 0));
+        instance.pushComplex("-1i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 1));
+
+        instance.pushComplex("1.0");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(-1.0, 0));
+        instance.pushComplex("1.0i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, -1.0));
+
+        instance.pushComplex("-1.0");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(1, 0));
+        instance.pushComplex("-1.0i");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 1));
+
+        instance.pushComplex("0.0");
+        instance.negate();
+        assertEquals(instance.getStack().pop(), new Complex(0, 0));
     }
 
     @Test
     public void testNegateFullStack() {
+        Complex arrayY[];
+        arrayY = new Complex[]{new Complex(5, 3), new Complex(-5, -3),
+            new Complex(5, -3), new Complex(-5, 3),
+            new Complex(1, 1), new Complex(-1, -1),
+            new Complex(1, -1), new Complex(-1, 1), new Complex(5.0, 3.0), new Complex(-5.0, -3.0),
+            new Complex(5.0, -3.0), new Complex(-5.0, 3.0),
+            new Complex(1.0, 1.0),
+            new Complex(-1.0, -1.0), new Complex(1.0, -1.0), new Complex(-1.0, 1.0),
+            new Complex(5.7, 3.7), new Complex(-5.7, -3.7),
+            new Complex(5.7, -3.7), new Complex(-5.7, 3.7), new Complex(5.7, 0.7),
+            new Complex(-5.7, 0.7), new Complex(0.7, 3.7), new Complex(0.7, -3.7),
+            new Complex(0.7, 0.7), new Complex(1.7, 1.7), new Complex(1.7, 0.7), new Complex(0.7, 1.7),
+            new Complex(-1.7, -1.7), new Complex(1.7, -1.7), new Complex(-1.7, 1.7),
+            new Complex(-1.7, 0.7), new Complex(0.7, -1.7)
+        };
         int i = 0;
-        for (Complex x : array) {
-            instance.pushComplex(array[i].toString());
+        for (Complex x : arrayY) {
+            instance.pushComplex(arrayY[i].toString());
             i++;
         }
         i--;
         while (i >= 0) {
             instance.negate();
-            assertEquals(instance.getStack().pop(), array[i].negate());
+            assertEquals(instance.getStack().pop(), arrayY[i].negate());
             i--;
         }
     }
