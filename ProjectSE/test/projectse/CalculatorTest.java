@@ -855,14 +855,13 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("d up"));
         assertEquals(-1, instance.recognizer("swa p"));
         assertEquals(-1, instance.recognizer("ov er"));
-        
+
         //test per le var operations
-        
         for (char x = 'a'; x <= 'z'; x++) {
             assertEquals(12, instance.recognizer("show " + x));
-        //continuare qui
+            //continuare qui
         }
-        
+
         for (char x = 0; x <= 96; x++) {
             assertEquals(-1, instance.recognizer("show " + x));
         }
@@ -1249,7 +1248,7 @@ public class CalculatorTest {
         assertEquals(-1, instance.makeOperation(100));
         assertEquals(7, instance.makeOperation(7));
     }
-    
+
     @Test
     public void testShowVar() {
         VarCollection<Complex> v = instance.getVars();
@@ -1294,7 +1293,7 @@ public class CalculatorTest {
             instance.showVar(x);
         }
     }
-    
+
     @Test
     public void testPushToVarOperands() {
         for (char x = 'a'; x <= 'z'; x++) {
@@ -1370,7 +1369,7 @@ public class CalculatorTest {
             instance.pushToVar(x);
         }
     }
-    
+
     @Test
     public void testPullFromVar() {
         for (char x = 'a'; x <= 'z'; x++) {
@@ -1429,7 +1428,7 @@ public class CalculatorTest {
             instance.pullFromVar(x);
         }
     }
-    
+
     @Test
     public void testAddVarOperands() {
         for (char x = 'a'; x <= 'z'; x++) {
@@ -1545,4 +1544,118 @@ public class CalculatorTest {
         }
     }
 
+    @Test
+    public void testSubtractVarOperands() {
+        for (char x = 'a'; x <= 'z'; x++) {
+            for (Complex y : array) {
+                instance.getVars().setVar(x, y);
+                for (Complex z : array) {
+                    instance.pushComplex(z.toString());
+                    instance.subtractVar(x);
+                    assertEquals(y.subtract(z), instance.getStack().pop());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testSubtractVarFullStack() {
+        int i = 0;
+        for (Complex x : array) {
+            instance.pushComplex(x.toString());
+            i++;
+        }
+        i--;
+        for (char x = 'a'; x <= 'z'; x++) {
+            instance.getVars().setVar(x, array[i]);
+            while (i > 0) {
+                instance.subtractVar(x);
+                assertEquals(instance.getStack().getFirst(), instance.getVars().getVar(x).subtract(array[i]));
+                instance.getVars().setVar(x, instance.getStack().pop());
+                i--;
+            }
+        }
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testSubtractVarExceptions1() {
+        instance.subtractVar('0');
+        instance.subtractVar('1');
+        instance.subtractVar('2');
+        instance.subtractVar('3');
+        instance.subtractVar('4');
+        instance.subtractVar('5');
+        instance.subtractVar('6');
+        instance.subtractVar('7');
+        instance.subtractVar('8');
+        instance.subtractVar('9');
+        instance.subtractVar('!');
+        instance.subtractVar('"');
+        instance.subtractVar('£');
+        instance.subtractVar('$');
+        instance.subtractVar('%');
+        instance.subtractVar('&');
+        instance.subtractVar('/');
+        instance.subtractVar('(');
+        instance.subtractVar(')');
+        instance.subtractVar('=');
+        instance.subtractVar('?');
+        instance.subtractVar('à');
+        instance.subtractVar('è');
+        instance.subtractVar('ì');
+        instance.subtractVar('ò');
+        instance.subtractVar('ù');
+        instance.subtractVar('+');
+        instance.subtractVar('-');
+        instance.subtractVar('*');
+        instance.subtractVar('\\');
+        instance.subtractVar(' ');
+        instance.subtractVar('\t');
+        instance.subtractVar('\n');
+        instance.subtractVar('\r');
+        instance.subtractVar('.');
+        instance.subtractVar(',');
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testSubtractVarExceptions2() {
+        VarCollection<Complex> v = instance.getVars();
+        v.setVar('a', new Complex(0, 0));
+        v.setVar('b', new Complex(0, 1));
+        v.setVar('c', new Complex(0.0, 3.0));
+        v.setVar('d', new Complex(0, 3));
+        v.setVar('e', new Complex(0.0, 1.0));
+        v.setVar('f', new Complex(-5, -3));
+        v.setVar('g', new Complex(-5, 3));
+        v.setVar('h', new Complex(5, 0));
+        v.setVar('i', new Complex(1, 1));
+        v.setVar('j', new Complex(1, 0));
+        v.setVar('k', new Complex(-1, -1));
+        v.setVar('l', new Complex(-1, 0));
+        v.setVar('m', new Complex(1, -1));
+        v.setVar('n', new Complex(-1, 1));
+        v.setVar('o', new Complex(5.0, 3.0));
+        v.setVar('p', new Complex(-5.0, 3.0));
+        v.setVar('q', new Complex(1.0, 1.0));
+        v.setVar('r', new Complex(1.0, 0.0));
+        v.setVar('s', new Complex(-5.7, -3.7));
+        v.setVar('t', new Complex(0.7, 3.7));
+        v.setVar('u', new Complex(0.7, -3.7));
+        v.setVar('v', new Complex(1.7, 0.7));
+        v.setVar('w', new Complex(10.7, 1.7));
+        v.setVar('x', new Complex(-5, 0));
+        v.setVar('y', new Complex(-1.7, 0.7));
+        v.setVar('z', new Complex(0.7, -1.7));
+        for (char x = 'a'; x <= 'z'; x++) {
+            instance.subtractVar(x);
+        }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSubtractVarExceptions3() {
+        instance.pushComplex("24+2i");
+        for (char x = 'a'; x <= 'z'; x++) {
+            instance.subtractVar(x);
+        }
+    }
 }

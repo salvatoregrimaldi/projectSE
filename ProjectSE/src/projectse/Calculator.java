@@ -394,4 +394,16 @@ public class Calculator {
             throw new NullPointerException();
         }
     }
+
+    public void subtractVar(char c) throws UnacceptableKeyException, NoSuchElementException, NullPointerException {
+        Complex op1, op2, result;
+        op1 = vars.getVar(c);
+        if (op1 != null) {
+            op2 = stack.pop();
+            result = op1.subtract(op2);
+            stack.push(result);
+        } else {
+            throw new NullPointerException();
+        }
+    }
 }
