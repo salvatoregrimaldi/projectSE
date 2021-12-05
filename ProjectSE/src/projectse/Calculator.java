@@ -371,6 +371,25 @@ public class Calculator {
         stack.push(op2);
     }
 
+    public int makeVarOperation(int id, char c) throws UnacceptableKeyException{
+        switch (id) {
+            case 13:
+                pushToVar(c);
+                return 13;
+            case 14:
+                pullFromVar(c);
+                return 14;
+            case 15:
+                addVar(c);
+                return 15;
+            case 16:
+                subtractVar(c);
+                return 16;
+            default:
+                return -1;
+        }
+    }
+
     public Complex showVar(char c) throws UnacceptableKeyException {
         return vars.getVar(c);
     }

@@ -114,6 +114,19 @@ public class FXMLDocumentController implements Initializable {
                         }
                         flag = true;
                         return;
+                    } else if (id > 12) {
+                        input = input.trim();
+                        try {
+                            calc.makeVarOperation(id, input.charAt(input.length() - 1));
+                        } catch (NoSuchElementException e) {
+                            textField.setText("Not Enough Elements Error");
+                            flag = true;
+                            return;
+                        } catch (NullPointerException e) {
+                            textField.setText("Null Variable Error");
+                            flag = true;
+                            return;
+                        }
                     } else if (id == -1) {
                         textField.setText("Syntax Error");
                         flag = true;
