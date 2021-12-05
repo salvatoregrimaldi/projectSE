@@ -101,6 +101,18 @@ public class Calculator {
         if (input.matches("show [a-z]")) {
             return 12;
         }
+        if (input.matches(">[a-z]")) {
+            return 13;
+        }
+        if (input.matches("<[a-z]")) {
+            return 14;
+        }
+        if (input.matches("\\+[a-z]")) {
+            return 15;
+        }
+        if (input.matches("-[a-z]")) {
+            return 16;
+        }
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
         }
@@ -371,7 +383,7 @@ public class Calculator {
         stack.push(op2);
     }
 
-    public int makeVarOperation(int id, char c) throws UnacceptableKeyException{
+    public int makeVarOperation(int id, char c) throws UnacceptableKeyException {
         switch (id) {
             case 13:
                 pushToVar(c);

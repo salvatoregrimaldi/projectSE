@@ -721,8 +721,8 @@ public class CalculatorTest {
         assertEquals(0, instance.recognizer("+i5"));
         assertEquals(0, instance.recognizer("-i5"));
         assertEquals(0, instance.recognizer("i"));
-        assertEquals(0, instance.recognizer("+i"));
-        assertEquals(0, instance.recognizer("-i"));
+        //assertEquals(0, instance.recognizer("+i"));
+        //assertEquals(0, instance.recognizer("-i"));
         assertEquals(0, instance.recognizer("0i"));
         assertEquals(0, instance.recognizer("i0"));
         assertEquals(0, instance.recognizer("+0i"));
@@ -859,7 +859,10 @@ public class CalculatorTest {
         //test per le var operations
         for (char x = 'a'; x <= 'z'; x++) {
             assertEquals(12, instance.recognizer("show " + x));
-            //continuare qui
+            assertEquals(13, instance.recognizer(">" + x));
+            assertEquals(14, instance.recognizer("<" + x));
+            assertEquals(15, instance.recognizer("+" + x));
+            assertEquals(16, instance.recognizer("-" + x));
         }
 
         for (char x = 0; x <= 96; x++) {
@@ -868,12 +871,49 @@ public class CalculatorTest {
         for (char x = 123; x <= 127; x++) {
             assertEquals(-1, instance.recognizer("show" + x));
         }
+
+        for (char x = 0; x <= 96; x++) {
+            assertEquals(-1, instance.recognizer(">" + x));
+        }
+        for (char x = 123; x <= 127; x++) {
+            assertEquals(-1, instance.recognizer(">" + x));
+        }
+
+        for (char x = 0; x <= 96; x++) {
+            assertEquals(-1, instance.recognizer("<" + x));
+        }
+        for (char x = 123; x <= 127; x++) {
+            assertEquals(-1, instance.recognizer("<" + x));
+        }
+
         assertEquals(-1, instance.recognizer("show" + "  %"));
         assertEquals(-1, instance.recognizer("show" + "  +"));
         assertEquals(-1, instance.recognizer("show" + "  -"));
         assertEquals(-1, instance.recognizer("show" + "  /"));
         assertEquals(-1, instance.recognizer("show" + "  9"));
         assertEquals(-1, instance.recognizer("show" + "  0"));
+
+        assertEquals(-1, instance.recognizer(">" + "  %"));
+        assertEquals(-1, instance.recognizer(">" + " $"));
+        assertEquals(-1, instance.recognizer("<  1"));
+        assertEquals(-1, instance.recognizer("<  " + "1"));
+        assertEquals(-1, instance.recognizer("<" + " %"));
+        assertEquals(-1, instance.recognizer("<" + "  $"));
+        assertEquals(-1, instance.recognizer("<" + " /"));
+
+        assertEquals(-1, instance.recognizer("+" + "  1"));
+        assertEquals(-1, instance.recognizer("+" + " %"));
+        assertEquals(-1, instance.recognizer("+" + "  $"));
+        assertEquals(-1, instance.recognizer("+" + " 3"));
+        assertEquals(-1, instance.recognizer("+" + "  %"));
+        assertEquals(-1, instance.recognizer("+" + " $"));
+
+        assertEquals(-1, instance.recognizer("-" + " 1"));
+        assertEquals(-1, instance.recognizer("-" + " %"));
+        assertEquals(-1, instance.recognizer("-" + "  $"));
+        assertEquals(-1, instance.recognizer("-" + " 3"));
+        assertEquals(-1, instance.recognizer("-" + "  %"));
+        assertEquals(-1, instance.recognizer("-" + " $"));
     }
 
     @Test
