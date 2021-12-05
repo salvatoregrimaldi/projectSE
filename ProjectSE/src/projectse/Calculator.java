@@ -374,13 +374,24 @@ public class Calculator {
     public Complex showVar(char c) throws UnacceptableKeyException {
         return vars.getVar(c);
     }
-    
+
     public void pushToVar(char c) throws UnacceptableKeyException, NoSuchElementException {
         vars.setVar(c, stack.pop());
     }
-    
+
     public void pullFromVar(char c) throws UnacceptableKeyException, NullPointerException {
         stack.push(vars.getVar(c));
     }
 
+    public void addVar(char c) throws UnacceptableKeyException, NoSuchElementException, NullPointerException {
+        Complex op1, op2, result;
+        op1 = vars.getVar(c);
+        if (op1 != null) {
+            op2 = stack.pop();
+            result = op1.add(op2);
+            stack.push(result);
+        } else {
+            throw new NullPointerException();
+        }
+    }
 }
