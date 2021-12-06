@@ -1384,7 +1384,9 @@ public class CalculatorTest {
     @Test
     public void testMakeVarOperation() {
         //inserimenti necessari per il funzionamento delle operazioni
-        instance.pushComplex("2+i");
+        for (Complex x : array) {
+            instance.getStack().push(x);
+        }
 
         VarCollection<Complex> v = instance.getVars();
         v.setVar('a', new Complex(0, 0));
@@ -1658,7 +1660,8 @@ public class CalculatorTest {
                 for (Complex z : array) {
                     instance.pushComplex(z.toString());
                     instance.addVar(x);
-                    assertEquals(y.add(z), instance.getStack().pop());
+                    assertEquals(y.add(z), instance.getVars().getVar(x));
+                    instance.getVars().setVar(x, y);
                 }
             }
         }
@@ -1675,9 +1678,10 @@ public class CalculatorTest {
         for (char x = 'a'; x <= 'z'; x++) {
             instance.getVars().setVar(x, array[i]);
             while (i > 0) {
+                Complex app = instance.getVars().getVar(x);
                 instance.addVar(x);
-                assertEquals(instance.getStack().getFirst(), instance.getVars().getVar(x).add(array[i]));
-                instance.getVars().setVar(x, instance.getStack().pop());
+                assertEquals(instance.getVars().getVar(x), app.add(array[i]));
+                instance.getVars().setVar(x, app);
                 i--;
             }
         }

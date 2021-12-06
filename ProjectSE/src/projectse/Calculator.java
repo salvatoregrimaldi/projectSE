@@ -427,7 +427,7 @@ public class Calculator {
         if (op1 != null) {
             op2 = stack.pop();
             result = op1.add(op2);
-            stack.push(result);
+            vars.setVar(c, result);
         } else {
             throw new NullPointerException();
         }
