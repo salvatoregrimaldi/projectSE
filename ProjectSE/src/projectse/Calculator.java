@@ -348,7 +348,7 @@ public class Calculator {
         if (app.getReal() == -0.0) {
             app = new Complex(0, app.getImaginary());
         }
-        if(app.getImaginary() == -0.0){
+        if (app.getImaginary() == -0.0) {
             app = new Complex(app.getReal(), 0);
         }
         stack.push(app);
@@ -439,7 +439,7 @@ public class Calculator {
         if (op1 != null) {
             op2 = stack.pop();
             result = op1.subtract(op2);
-            stack.push(result);
+            vars.setVar(c, result);
         } else {
             throw new NullPointerException();
         }

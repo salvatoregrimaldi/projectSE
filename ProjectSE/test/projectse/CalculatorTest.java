@@ -1386,6 +1386,7 @@ public class CalculatorTest {
         //inserimenti necessari per il funzionamento delle operazioni
         for (Complex x : array) {
             instance.getStack().push(x);
+            instance.getStack().push(x);
         }
 
         VarCollection<Complex> v = instance.getVars();
@@ -1777,7 +1778,8 @@ public class CalculatorTest {
                 for (Complex z : array) {
                     instance.pushComplex(z.toString());
                     instance.subtractVar(x);
-                    assertEquals(y.subtract(z), instance.getStack().pop());
+                    assertEquals(y.subtract(z), instance.getVars().getVar(x));
+                    instance.getVars().setVar(x, y);
                 }
             }
         }
@@ -1794,9 +1796,10 @@ public class CalculatorTest {
         for (char x = 'a'; x <= 'z'; x++) {
             instance.getVars().setVar(x, array[i]);
             while (i > 0) {
+                Complex app = instance.getVars().getVar(x);
                 instance.subtractVar(x);
-                assertEquals(instance.getStack().getFirst(), instance.getVars().getVar(x).subtract(array[i]));
-                instance.getVars().setVar(x, instance.getStack().pop());
+                assertEquals(instance.getVars().getVar(x), app.subtract(array[i]));
+                instance.getVars().setVar(x, app);
                 i--;
             }
         }
