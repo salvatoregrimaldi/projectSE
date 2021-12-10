@@ -37,6 +37,7 @@ public class FXMLDocumentController implements Initializable {
     private int id;
     private boolean flag = false;
     public static final int N_OP = 11;
+    private Invoker invok = new Invoker();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -128,8 +129,17 @@ public class FXMLDocumentController implements Initializable {
                             return;
                         }
                     } else if (id == -1) {
-                        textField.setText("Syntax Error");
+                        if (calc.recUserOp(input) == -1) {
+                            textField.setText("Syntax Error");
+                            flag = true;
+                            return;
+                        }
+                        input = input.trim();
+                        String nameOp = input.split(" ")[0];
+                        calc.getUserOpMap().put(nameOp, new UserOpCommand(nameOp, input.substring(nameOp.length() + 1), calc));
+                        textField.setText("User-Op \"" + nameOp + "\" Added");
                         flag = true;
+                        return;
                     }
                     listView.getItems().clear();
                     al.clear();

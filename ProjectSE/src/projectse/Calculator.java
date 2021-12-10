@@ -8,6 +8,8 @@ package projectse;
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
 import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -18,10 +20,12 @@ public class Calculator {
 
     private Deque<Complex> stack;
     private VarCollection<Complex> vars;
+    private Map<String, UserOpCommand> userOpMap;
 
     public Calculator() {
         stack = new ArrayDeque<Complex>();
         vars = new VarCollection<>();
+        userOpMap = new HashMap<>();
     }
 
     public Deque<Complex> getStack() {
@@ -30,6 +34,10 @@ public class Calculator {
 
     public VarCollection<Complex> getVars() {
         return vars;
+    }
+    
+    public Map<String, UserOpCommand> getUserOpMap() {
+        return userOpMap;
     }
 
     private boolean isReal(String input) {
