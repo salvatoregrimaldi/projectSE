@@ -1508,14 +1508,18 @@ public class CalculatorTest {
     }
 
     @Test(expected = UnacceptableKeyException.class)
-    public void testShowVarExceptions() {
-        char x;
-        for (x = 0; x < 96; x++) {
-            instance.showVar(x);
-        }
-        for (x = 123; x <= 127; x++) {
-            instance.showVar(x);
-        }
+    public void testShowVarExceptions1() {
+        instance.showVar('£');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testShowVarExceptions2() {
+        instance.showVar('$');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testShowVarExceptions3() {
+        instance.showVar('€');
     }
 
     @Test
@@ -1549,49 +1553,24 @@ public class CalculatorTest {
     @Test(expected = UnacceptableKeyException.class)
     public void testPushToVarExceptions1() {
         instance.pushComplex("3+5i");
-        instance.pushToVar('0');
         instance.pushToVar('1');
-        instance.pushToVar('2');
-        instance.pushToVar('3');
-        instance.pushToVar('4');
-        instance.pushToVar('5');
-        instance.pushToVar('6');
-        instance.pushToVar('7');
-        instance.pushToVar('8');
-        instance.pushToVar('9');
-        instance.pushToVar('!');
-        instance.pushToVar('"');
-        instance.pushToVar('£');
-        instance.pushToVar('$');
-        instance.pushToVar('%');
-        instance.pushToVar('&');
-        instance.pushToVar('/');
-        instance.pushToVar('(');
-        instance.pushToVar(')');
-        instance.pushToVar('=');
-        instance.pushToVar('?');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testPushToVarExceptions2() {
+        instance.pushComplex("3+5i");
+        instance.pushToVar('@');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testPushToVarExceptions3() {
+        instance.pushComplex("3+5i");
         instance.pushToVar('à');
-        instance.pushToVar('è');
-        instance.pushToVar('ì');
-        instance.pushToVar('ò');
-        instance.pushToVar('ù');
-        instance.pushToVar('+');
-        instance.pushToVar('-');
-        instance.pushToVar('*');
-        instance.pushToVar('\\');
-        instance.pushToVar(' ');
-        instance.pushToVar('\t');
-        instance.pushToVar('\n');
-        instance.pushToVar('\r');
-        instance.pushToVar('.');
-        instance.pushToVar(',');
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testPushToVarExceptions2() {
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.pushToVar(x);
-        }
+    public void testPushToVarExceptions4() {
+        instance.pushToVar('j');
     }
 
     @Test
