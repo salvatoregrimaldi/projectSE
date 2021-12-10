@@ -951,8 +951,12 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testAddExceptions() {
+    public void testAddExceptions1() {
         instance.add();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testAddExceptions2() {
         instance.pushComplex("24+2i");
         instance.add();
     }
@@ -1074,8 +1078,12 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testDivideExceptions() {
+    public void testDivideExceptions1() {
         instance.divide();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testDivideExceptions2() {
         instance.pushComplex("24+2i");
         instance.divide();
     }
