@@ -1037,8 +1037,12 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testMultiplyExceptions() {
+    public void testMultiplyExceptions1() {
         instance.multiply();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testMultiplyExceptions2() {
         instance.pushComplex("24+2i");
         instance.multiply();
     }
@@ -1316,8 +1320,12 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testSwapExceptions() {
+    public void testSwapExceptions1() {
         instance.swap();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testSwapExceptions2() {
         instance.pushComplex("24+2i");
         instance.swap();
     }
@@ -1616,49 +1624,24 @@ public class CalculatorTest {
     @Test(expected = UnacceptableKeyException.class)
     public void testPullFromVarExceptions1() {
         instance.pushComplex("3+5i");
-        instance.pullFromVar('0');
         instance.pullFromVar('1');
-        instance.pullFromVar('2');
-        instance.pullFromVar('3');
-        instance.pullFromVar('4');
-        instance.pullFromVar('5');
-        instance.pullFromVar('6');
-        instance.pullFromVar('7');
-        instance.pullFromVar('8');
-        instance.pullFromVar('9');
-        instance.pullFromVar('!');
-        instance.pullFromVar('"');
-        instance.pullFromVar('£');
-        instance.pullFromVar('$');
-        instance.pullFromVar('%');
-        instance.pullFromVar('&');
-        instance.pullFromVar('/');
-        instance.pullFromVar('(');
-        instance.pullFromVar(')');
-        instance.pullFromVar('=');
-        instance.pullFromVar('?');
-        instance.pullFromVar('à');
-        instance.pullFromVar('è');
-        instance.pullFromVar('ì');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testPullFromVarExceptions2() {
+        instance.pushComplex("3+5i");
+        instance.pullFromVar('§');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testPullFromVarExceptions3() {
+        instance.pushComplex("3+5i");
         instance.pullFromVar('ò');
-        instance.pullFromVar('ù');
-        instance.pullFromVar('+');
-        instance.pullFromVar('-');
-        instance.pullFromVar('*');
-        instance.pullFromVar('\\');
-        instance.pullFromVar(' ');
-        instance.pullFromVar('\t');
-        instance.pullFromVar('\n');
-        instance.pullFromVar('\r');
-        instance.pullFromVar('.');
-        instance.pullFromVar(',');
     }
 
     @Test(expected = NullPointerException.class)
-    public void testPullFromVarExceptions2() {
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.pullFromVar(x);
-        }
+    public void testPullFromVarExceptions4() {
+        instance.pullFromVar('k');
     }
 
     @Test
@@ -1699,83 +1682,29 @@ public class CalculatorTest {
     @Test(expected = UnacceptableKeyException.class)
     public void testAddVarExceptions1() {
         instance.addVar('0');
-        instance.addVar('1');
-        instance.addVar('2');
-        instance.addVar('3');
-        instance.addVar('4');
-        instance.addVar('5');
-        instance.addVar('6');
-        instance.addVar('7');
-        instance.addVar('8');
-        instance.addVar('9');
-        instance.addVar('!');
-        instance.addVar('"');
-        instance.addVar('£');
-        instance.addVar('$');
-        instance.addVar('%');
-        instance.addVar('&');
-        instance.addVar('/');
-        instance.addVar('(');
-        instance.addVar(')');
-        instance.addVar('=');
-        instance.addVar('?');
-        instance.addVar('à');
-        instance.addVar('è');
-        instance.addVar('ì');
-        instance.addVar('ò');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testAddVarExceptions2() {
+        instance.addVar('[');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testAddVarExceptions3() {
         instance.addVar('ù');
-        instance.addVar('+');
-        instance.addVar('-');
-        instance.addVar('*');
-        instance.addVar('\\');
-        instance.addVar(' ');
-        instance.addVar('\t');
-        instance.addVar('\n');
-        instance.addVar('\r');
-        instance.addVar('.');
-        instance.addVar(',');
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testAddVarExceptions2() {
+    public void testAddVarExceptions4() {
         VarCollection<Complex> v = instance.getVars();
         v.setVar('a', new Complex(0, 0));
-        v.setVar('b', new Complex(0, 1));
-        v.setVar('c', new Complex(0.0, 3.0));
-        v.setVar('d', new Complex(0, 3));
-        v.setVar('e', new Complex(0.0, 1.0));
-        v.setVar('f', new Complex(-5, -3));
-        v.setVar('g', new Complex(-5, 3));
-        v.setVar('h', new Complex(5, 0));
-        v.setVar('i', new Complex(1, 1));
-        v.setVar('j', new Complex(1, 0));
-        v.setVar('k', new Complex(-1, -1));
-        v.setVar('l', new Complex(-1, 0));
-        v.setVar('m', new Complex(1, -1));
-        v.setVar('n', new Complex(-1, 1));
-        v.setVar('o', new Complex(5.0, 3.0));
-        v.setVar('p', new Complex(-5.0, 3.0));
-        v.setVar('q', new Complex(1.0, 1.0));
-        v.setVar('r', new Complex(1.0, 0.0));
-        v.setVar('s', new Complex(-5.7, -3.7));
-        v.setVar('t', new Complex(0.7, 3.7));
-        v.setVar('u', new Complex(0.7, -3.7));
-        v.setVar('v', new Complex(1.7, 0.7));
-        v.setVar('w', new Complex(10.7, 1.7));
-        v.setVar('x', new Complex(-5, 0));
-        v.setVar('y', new Complex(-1.7, 0.7));
-        v.setVar('z', new Complex(0.7, -1.7));
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.addVar(x);
-        }
+        instance.addVar('a');
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAddVarExceptions3() {
+    public void testAddVarExceptions5() {
         instance.pushComplex("24+2i");
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.addVar(x);
-        }
+        instance.addVar('d');
     }
 
     @Test
