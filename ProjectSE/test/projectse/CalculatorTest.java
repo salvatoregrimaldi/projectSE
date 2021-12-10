@@ -1523,6 +1523,75 @@ public class CalculatorTest {
     }
 
     @Test
+    public void testRecUserOp() {
+        /*la dichiarazione dell'operazione-utente non può contenere due o più whitespaces*/
+        assertEquals(-1, instance.recUserOp("oper  drop dup 65i >a"));
+        assertEquals(-1, instance.recUserOp("oper drop   dup 65i swap + >a"));
+
+        /*la dichiarazione dell'operazione-utente non può avere "show" come nome dell'operazione*/
+        assertEquals(-1, instance.recUserOp("show drop dup 65i swap + >a"));
+        assertEquals(-1, instance.recUserOp("show +- sqrt +a"));
+        
+        /*la dichiarazione dell'operazione-utente non può avere una lettera [a-z] come nome dell'operazione*/
+        for (char x = 'a'; x <= 'z'; x++) {
+            assertEquals(-1, instance.recUserOp(x + " +- sqrt +a"));
+        }
+
+        /*la dichiarazione dell'operazione-utente non può contenere un'unica parola (non avrebbe senso un'operazione-utente vuota)*/
+        assertEquals(-1, instance.recUserOp("ciao"));
+        assertEquals(-1, instance.recUserOp("ciaociao"));
+        
+        /*Il nome di un'operazione-utente non può corrispondere ad un numero complesso*/
+        assertEquals(-1, instance.recUserOp("0 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("67 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("67i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("-67i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("5+3i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("+5+3i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("5-3i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("-5-3i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("i3+5 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("3i+5 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("1 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("-1 + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("-1i + swap >d +h over"));
+        assertEquals(-1, instance.recUserOp("+1i + swap >d +h over"));
+
+        /*Il nome di un'operazione-utente non può corrispondere ad un'operazione standard (+, -, ...)*/
+        assertEquals(-1, instance.recUserOp("+ / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("- / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("* / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("/ / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("sqrt / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("+- / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("clear / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("drop / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("dup / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("swap / dup clear 34+9i <a"));
+        assertEquals(-1, instance.recUserOp("over / dup clear 34+9i <a"));
+        for (char x = 'a'; x <= 'z'; x++) {
+            assertEquals(-1, instance.recUserOp("<" + x + " / dup clear 34+9i <a"));
+            assertEquals(-1, instance.recUserOp(">" + x + " / dup clear 34+9i <a"));
+            assertEquals(-1, instance.recUserOp("+" + x + " / dup clear 34+9i <a"));
+            assertEquals(-1, instance.recUserOp("-" + x + " / dup clear 34+9i <a"));
+        }
+        
+        /*Un'operazione-utente non può contenere la stringa show*/
+        assertEquals(-1, instance.recUserOp("oper / show <c"));
+        
+        /*test vari*/
+        assertEquals(1, instance.recUserOp("salvo sqrt 3+4i / 4i clear dup 3 +-"));
+        assertEquals(1, instance.recUserOp("enri 5+8i >f <f sqrt -"));
+        assertEquals(1, instance.recUserOp("alle dup swap over -b"));
+        assertEquals(1, instance.recUserOp("  andre / +c -c / clear sqrt +v + drop   "));
+        assertEquals(1, instance.recUserOp("salvo1 clear drop drop swap * >z / *"));
+        assertEquals(1, instance.recUserOp("enri1 8 * * -h 88i dup dup *"));
+        assertEquals(1, instance.recUserOp("alle1 sqrt +a <n 19 clear"));
+        assertEquals(1, instance.recUserOp("andre1 * clear over 33 dup +- +-"));
+    }
+    
+    @Test
     public void testPushToVarOperands() {
         for (char x = 'a'; x <= 'z'; x++) {
             for (Complex y : array) {

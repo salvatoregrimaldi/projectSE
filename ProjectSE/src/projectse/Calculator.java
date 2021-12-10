@@ -96,6 +96,30 @@ public class Calculator {
         return true;
     }
 
+    public int recUserOp(String input) {
+        input = input.trim();
+        if (input.contains("  ")) {
+            return -1;
+        }
+        String parts[] = input.split(" ");
+        if (!(parts[0].equals("show")) && !(parts[0].matches("[a-z]")) && parts.length > 1) {
+            int id = recognizer(parts[0]);
+            if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
+                for (int i = 1; i < parts.length; i++) {
+                    id = recognizer(parts[i]);
+                    if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
+                        return -1;
+                    }
+                }
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+        return 1;
+    }
+
     public int recognizer(String input) {
         input = input.trim();
         if (input.matches("show [a-z]")) {
