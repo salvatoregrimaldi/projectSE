@@ -996,8 +996,12 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testSubtractExceptions() {
+    public void testSubtractExceptions1() {
         instance.subtract();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testSubtractExceptions2() {
         instance.pushComplex("24+2i");
         instance.subtract();
     }
@@ -1347,10 +1351,14 @@ public class CalculatorTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testOverExceptions() {
-        instance.dup();
+    public void testOverExceptions1() {
+        instance.over();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testOverExceptions2() {
         instance.pushComplex("24+2i");
-        instance.swap();
+        instance.over();
     }
 
     @Test
@@ -1442,51 +1450,27 @@ public class CalculatorTest {
     }
 
     @Test(expected = UnacceptableKeyException.class)
-    public void testMakeVarOperationExceptions() {
-        //inserimenti necessari per il funzionamento delle operazioni
+    public void testMakeVarOperationExceptions1() {
         instance.pushComplex("2+i");
+        instance.makeVarOperation(13, '%');
+    }
 
-        VarCollection<Complex> v = instance.getVars();
-        v.setVar('a', new Complex(0, 0));
-        v.setVar('b', new Complex(0, 1));
-        v.setVar('c', new Complex(0.0, 3.0));
-        v.setVar('d', new Complex(0, 3));
-        v.setVar('e', new Complex(0.0, 1.0));
-        v.setVar('f', new Complex(-5, -3));
-        v.setVar('g', new Complex(-5, 3));
-        v.setVar('h', new Complex(5, 0));
-        v.setVar('i', new Complex(1, 1));
-        v.setVar('j', new Complex(1, 0));
-        v.setVar('k', new Complex(-1, -1));
-        v.setVar('l', new Complex(-1, 0));
-        v.setVar('m', new Complex(1, -1));
-        v.setVar('n', new Complex(-1, 1));
-        v.setVar('o', new Complex(5.0, 3.0));
-        v.setVar('p', new Complex(-5.0, 3.0));
-        v.setVar('q', new Complex(1.0, 1.0));
-        v.setVar('r', new Complex(1.0, 0.0));
-        v.setVar('s', new Complex(-5.7, -3.7));
-        v.setVar('t', new Complex(0.7, 3.7));
-        v.setVar('u', new Complex(0.7, -3.7));
-        v.setVar('v', new Complex(1.7, 0.7));
-        v.setVar('w', new Complex(10.7, 1.7));
-        v.setVar('x', new Complex(-5, 0));
-        v.setVar('y', new Complex(-1.7, 0.7));
-        v.setVar('z', new Complex(0.7, -1.7));
+    @Test(expected = UnacceptableKeyException.class)
+    public void testMakeVarOperationExceptions2() {
+        instance.pushComplex("2+i");
+        instance.makeVarOperation(14, 'ì');
+    }
 
-        for (char x = 0; x < 96; x++) {
-            instance.makeVarOperation(13, x);
-            instance.makeVarOperation(14, x);
-            instance.makeVarOperation(15, x);
-            instance.makeVarOperation(16, x);
-        }
-        for (char x = 123; x <= 127; x++) {
-            instance.makeVarOperation(13, x);
-            instance.makeVarOperation(14, x);
-            instance.makeVarOperation(15, x);
-            instance.makeVarOperation(16, x);
-        }
+    @Test(expected = UnacceptableKeyException.class)
+    public void testMakeVarOperationExceptions3() {
+        instance.pushComplex("2+i");
+        instance.makeVarOperation(15, '1');
+    }
 
+    @Test(expected = UnacceptableKeyException.class)
+    public void testMakeVarOperationExceptions4() {
+        instance.pushComplex("2+i");
+        instance.makeVarOperation(16, '*');
     }
 
     @Test
@@ -1744,83 +1728,29 @@ public class CalculatorTest {
 
     @Test(expected = UnacceptableKeyException.class)
     public void testSubtractVarExceptions1() {
-        instance.subtractVar('0');
         instance.subtractVar('1');
-        instance.subtractVar('2');
-        instance.subtractVar('3');
-        instance.subtractVar('4');
-        instance.subtractVar('5');
-        instance.subtractVar('6');
-        instance.subtractVar('7');
-        instance.subtractVar('8');
-        instance.subtractVar('9');
-        instance.subtractVar('!');
-        instance.subtractVar('"');
-        instance.subtractVar('£');
-        instance.subtractVar('$');
-        instance.subtractVar('%');
-        instance.subtractVar('&');
-        instance.subtractVar('/');
-        instance.subtractVar('(');
-        instance.subtractVar(')');
-        instance.subtractVar('=');
-        instance.subtractVar('?');
-        instance.subtractVar('à');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testSubtractVarExceptions2() {
+        instance.subtractVar(']');
+    }
+
+    @Test(expected = UnacceptableKeyException.class)
+    public void testSubtractVarExceptions3() {
         instance.subtractVar('è');
-        instance.subtractVar('ì');
-        instance.subtractVar('ò');
-        instance.subtractVar('ù');
-        instance.subtractVar('+');
-        instance.subtractVar('-');
-        instance.subtractVar('*');
-        instance.subtractVar('\\');
-        instance.subtractVar(' ');
-        instance.subtractVar('\t');
-        instance.subtractVar('\n');
-        instance.subtractVar('\r');
-        instance.subtractVar('.');
-        instance.subtractVar(',');
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testSubtractVarExceptions2() {
+    public void testSubtractVarExceptions4() {
         VarCollection<Complex> v = instance.getVars();
-        v.setVar('a', new Complex(0, 0));
-        v.setVar('b', new Complex(0, 1));
-        v.setVar('c', new Complex(0.0, 3.0));
-        v.setVar('d', new Complex(0, 3));
-        v.setVar('e', new Complex(0.0, 1.0));
-        v.setVar('f', new Complex(-5, -3));
-        v.setVar('g', new Complex(-5, 3));
-        v.setVar('h', new Complex(5, 0));
-        v.setVar('i', new Complex(1, 1));
-        v.setVar('j', new Complex(1, 0));
-        v.setVar('k', new Complex(-1, -1));
-        v.setVar('l', new Complex(-1, 0));
-        v.setVar('m', new Complex(1, -1));
-        v.setVar('n', new Complex(-1, 1));
-        v.setVar('o', new Complex(5.0, 3.0));
-        v.setVar('p', new Complex(-5.0, 3.0));
-        v.setVar('q', new Complex(1.0, 1.0));
-        v.setVar('r', new Complex(1.0, 0.0));
-        v.setVar('s', new Complex(-5.7, -3.7));
-        v.setVar('t', new Complex(0.7, 3.7));
-        v.setVar('u', new Complex(0.7, -3.7));
-        v.setVar('v', new Complex(1.7, 0.7));
-        v.setVar('w', new Complex(10.7, 1.7));
-        v.setVar('x', new Complex(-5, 0));
-        v.setVar('y', new Complex(-1.7, 0.7));
-        v.setVar('z', new Complex(0.7, -1.7));
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.subtractVar(x);
-        }
+        v.setVar('s', new Complex(0, 0));
+        instance.subtractVar('s');
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSubtractVarExceptions3() {
+    public void testSubtractVarExceptions5() {
         instance.pushComplex("24+2i");
-        for (char x = 'a'; x <= 'z'; x++) {
-            instance.subtractVar(x);
-        }
+        instance.subtractVar('w');
     }
 }
