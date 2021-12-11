@@ -35,7 +35,7 @@ public class Calculator {
     public VarCollection<Complex> getVars() {
         return vars;
     }
-    
+
     public Map<String, UserOpCommand> getUserOpMap() {
         return userOpMap;
     }
@@ -104,18 +104,22 @@ public class Calculator {
         return true;
     }
 
+    private boolean isUserOp(String op) {
+        return userOpMap.containsKey(op);
+    }
+
     public int recUserOp(String input) {
         input = input.trim();
         if (input.contains("  ")) {
             return -1;
         }
         String parts[] = input.split(" ");
-        if (!(parts[0].equals("show")) && !(parts[0].matches("[a-z]")) && parts.length > 1) {
+        if (!(parts[0].equals("show")) && !(parts[0].matches("[a-z]")) && parts.length > 1 && !(input.substring(parts[0].length()).contains(parts[0]))) {
             int id = recognizer(parts[0]);
             if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
                 for (int i = 1; i < parts.length; i++) {
                     id = recognizer(parts[i]);
-                    if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
+                    if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16) || (isUserOp(parts[i])))) {
                         return -1;
                     }
                 }

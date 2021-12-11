@@ -1541,6 +1541,12 @@ public class CalculatorTest {
         assertEquals(-1, instance.recUserOp("ciao"));
         assertEquals(-1, instance.recUserOp("ciaociao"));
         
+        /*la dichiarazione dell'operazione-utente non può contenere un riferimento a se stessa*/
+        assertEquals(-1, instance.recUserOp("oper oper"));
+        assertEquals(-1, instance.recUserOp("ciao ciao >a +a drop"));
+        assertEquals(-1, instance.recUserOp("oper + - dup oper sqrt"));
+        assertEquals(-1, instance.recUserOp("ciao >a +a drop ciao"));
+        
         /*Il nome di un'operazione-utente non può corrispondere ad un numero complesso*/
         assertEquals(-1, instance.recUserOp("0 + swap >d +h over"));
         assertEquals(-1, instance.recUserOp("67 + swap >d +h over"));
@@ -1577,8 +1583,26 @@ public class CalculatorTest {
             assertEquals(-1, instance.recUserOp("-" + x + " / dup clear 34+9i <a"));
         }
         
+        /*Un'operazione-utente non può contenere nomi di operazioni-utente non precedentemente definite*/
+        assertEquals(-1, instance.recUserOp("oper / oper2 clear <c"));
+        assertEquals(-1, instance.recUserOp("oper / oper3 clear <c"));
+        
         /*Un'operazione-utente non può contenere la stringa show*/
         assertEquals(-1, instance.recUserOp("oper / show <c"));
+        
+        /*Un'operazione-utente può contenere anche operazioni-utente precedentemente definite*/
+        instance.getUserOpMap().put("prova", new UserOpCommand("prova", "dup + drop 5i >a", instance));
+        instance.getUserOpMap().put("test", new UserOpCommand("test", "sqrt +- over over", instance));
+        instance.getUserOpMap().put("mix", new UserOpCommand("mix", "* prova - test /", instance));
+        assertEquals(1, instance.recUserOp("oper prova / clear <c"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap dup -a prova"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap prova dup -a"));
+        assertEquals(1, instance.recUserOp("oper test / clear <c"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap dup -a test"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap test dup -a"));
+        assertEquals(1, instance.recUserOp("oper mix / clear <c"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap dup -a mix"));
+        assertEquals(1, instance.recUserOp("oper clear <c swap mix dup -a"));
         
         /*test vari*/
         assertEquals(1, instance.recUserOp("salvo sqrt 3+4i / 4i clear dup 3 +-"));
