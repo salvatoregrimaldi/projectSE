@@ -914,6 +914,18 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("-" + " 3"));
         assertEquals(-1, instance.recognizer("-" + "  %"));
         assertEquals(-1, instance.recognizer("-" + " $"));
+
+        //test per le user-operation
+        instance.getUserOpMap().put("prova", new UserOpCommand("prova", "dup + drop 5i >a", instance));
+        instance.getUserOpMap().put("test", new UserOpCommand("test", "sqrt +- over over", instance));
+        instance.getUserOpMap().put("mix", new UserOpCommand("mix", "* prova - test /", instance));
+        assertEquals(18, instance.recognizer("prova"));
+        assertEquals(18, instance.recognizer("  test  "));
+        assertEquals(18, instance.recognizer("mix"));
+        assertEquals(-1, instance.recognizer("prrova"));
+        assertEquals(-1, instance.recognizer("  te st  "));
+        assertEquals(-1, instance.recognizer("mix_"));
+        assertEquals(-1, instance.recognizer("new"));
     }
 
     @Test
@@ -1531,7 +1543,7 @@ public class CalculatorTest {
         /*la dichiarazione dell'operazione-utente non può avere "show" come nome dell'operazione*/
         assertEquals(-1, instance.recUserOp("show drop dup 65i swap + >a"));
         assertEquals(-1, instance.recUserOp("show +- sqrt +a"));
-        
+
         /*la dichiarazione dell'operazione-utente non può avere una lettera [a-z] come nome dell'operazione*/
         for (char x = 'a'; x <= 'z'; x++) {
             assertEquals(-1, instance.recUserOp(x + " +- sqrt +a"));
@@ -1540,13 +1552,13 @@ public class CalculatorTest {
         /*la dichiarazione dell'operazione-utente non può contenere un'unica parola (non avrebbe senso un'operazione-utente vuota)*/
         assertEquals(-1, instance.recUserOp("ciao"));
         assertEquals(-1, instance.recUserOp("ciaociao"));
-        
+
         /*la dichiarazione dell'operazione-utente non può contenere un riferimento a se stessa*/
         assertEquals(-1, instance.recUserOp("oper oper"));
         assertEquals(-1, instance.recUserOp("ciao ciao >a +a drop"));
         assertEquals(-1, instance.recUserOp("oper + - dup oper sqrt"));
         assertEquals(-1, instance.recUserOp("ciao >a +a drop ciao"));
-        
+
         /*Il nome di un'operazione-utente non può corrispondere ad un numero complesso*/
         assertEquals(-1, instance.recUserOp("0 + swap >d +h over"));
         assertEquals(-1, instance.recUserOp("67 + swap >d +h over"));
@@ -1582,14 +1594,14 @@ public class CalculatorTest {
             assertEquals(-1, instance.recUserOp("+" + x + " / dup clear 34+9i <a"));
             assertEquals(-1, instance.recUserOp("-" + x + " / dup clear 34+9i <a"));
         }
-        
+
         /*Un'operazione-utente non può contenere nomi di operazioni-utente non precedentemente definite*/
         assertEquals(-1, instance.recUserOp("oper / oper2 clear <c"));
         assertEquals(-1, instance.recUserOp("oper / oper3 clear <c"));
-        
+
         /*Un'operazione-utente non può contenere la stringa show*/
         assertEquals(-1, instance.recUserOp("oper / show <c"));
-        
+
         /*Un'operazione-utente può contenere anche operazioni-utente precedentemente definite*/
         instance.getUserOpMap().put("prova", new UserOpCommand("prova", "dup + drop 5i >a", instance));
         instance.getUserOpMap().put("test", new UserOpCommand("test", "sqrt +- over over", instance));
@@ -1603,7 +1615,7 @@ public class CalculatorTest {
         assertEquals(1, instance.recUserOp("oper mix / clear <c"));
         assertEquals(1, instance.recUserOp("oper clear <c swap dup -a mix"));
         assertEquals(1, instance.recUserOp("oper clear <c swap mix dup -a"));
-        
+
         /*test vari*/
         assertEquals(1, instance.recUserOp("salvo sqrt 3+4i / 4i clear dup 3 +-"));
         assertEquals(1, instance.recUserOp("enri 5+8i >f <f sqrt -"));
@@ -1614,7 +1626,7 @@ public class CalculatorTest {
         assertEquals(1, instance.recUserOp("alle1 sqrt +a <n 19 clear"));
         assertEquals(1, instance.recUserOp("andre1 * clear over 33 dup +- +-"));
     }
-    
+
     @Test
     public void testPushToVarOperands() {
         for (char x = 'a'; x <= 'z'; x++) {

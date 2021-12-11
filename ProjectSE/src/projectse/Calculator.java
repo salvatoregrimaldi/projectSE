@@ -119,7 +119,7 @@ public class Calculator {
             if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
                 for (int i = 1; i < parts.length; i++) {
                     id = recognizer(parts[i]);
-                    if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16) || (isUserOp(parts[i])))) {
+                    if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16) || (id == 18))) {
                         return -1;
                     }
                 }
@@ -148,6 +148,9 @@ public class Calculator {
         }
         if (input.matches("-[a-z]")) {
             return 16;
+        }
+        if (isUserOp(input)) {
+            return 18;
         }
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
