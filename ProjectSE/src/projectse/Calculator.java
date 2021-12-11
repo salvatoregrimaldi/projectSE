@@ -32,8 +32,16 @@ public class Calculator {
         return stack;
     }
 
+    public void setStack(Deque<Complex> stack) {
+        this.stack = stack;
+    }
+
     public VarCollection<Complex> getVars() {
         return vars;
+    }
+
+    public void setVars(VarCollection<Complex> vars) {
+        this.vars = vars;
     }
 
     public Map<String, UserOpCommand> getUserOpMap() {

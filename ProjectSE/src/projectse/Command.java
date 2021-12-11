@@ -12,5 +12,7 @@ package projectse;
 public interface Command {
 
     void execute() throws UserOpNotFoundException;
+    
+    void rollback();
 
 }

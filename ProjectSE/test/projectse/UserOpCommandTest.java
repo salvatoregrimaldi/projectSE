@@ -12,6 +12,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -238,4 +239,118 @@ public class UserOpCommandTest {
         comm5.execute();
     }
 
+    /**
+     * Test of rollback method, of class UserOpCommand.
+     */
+    @Test
+    public void testRollBack() {
+        stack1 = new ArrayDeque<>();
+        vars1 = new VarCollection();
+        
+        UserOpCommand comm1 = new UserOpCommand("hello", "4 5i dup clear drop 3i 54", calculator);
+        calculator.getUserOpMap().put("hello", comm1);
+        try {
+            comm1.execute();
+        } catch (Exception e) {
+            comm1.rollback();
+        }
+
+        array1 = stack1.toArray();
+        array2 = calculator.getStack().toArray();
+        assertEquals(array1.length, array2.length);
+        for (int i = 0; i < array1.length; i++) {
+            assertEquals((Complex) array1[i], (Complex) array2[i]);
+        }
+
+        array1 = vars1.getCollect().values().toArray();
+        array2 = calculator.getVars().getCollect().values().toArray();
+        assertEquals(array1.length, array2.length);
+        for (int i = 0; i < array1.length; i++) {
+            assertEquals((Complex) array1[i], (Complex) array2[i]);
+        }
+
+        stack1.push(new Complex(5, 3));
+        stack1.push(new Complex(0, 3));
+        stack1.push(new Complex(-5, 0));
+        stack1.push(new Complex(44, 0));
+        stack1.push(new Complex(15, -3));
+        stack1.push(new Complex(58, 0));
+        stack1.push(new Complex(0, 1));
+        stack1.push(new Complex(0, -3));
+        stack1.push(new Complex(-5, -3));
+        stack1.push(new Complex(44, 0));
+        stack1.push(new Complex(0, 158));
+        stack1.push(new Complex(158, 0));
+        stack1.push(new Complex(-12, 0));
+        stack1.push(new Complex(123, -76));
+        stack1.push(new Complex(0, 6));
+        stack1.push(new Complex(3, 0));
+        stack1.push(new Complex(23, 5));
+        stack1.push(new Complex(0, 100));
+        stack1.push(new Complex(2, 0));
+        stack1.push(new Complex(1, 1));
+        stack1.push(new Complex(0, -1));
+        stack1.push(new Complex(72, 0));
+        stack1.push(new Complex(24, 10));
+        stack1.push(new Complex(4, 0));
+        stack1.push(new Complex(0, 15));
+        stack1.push(new Complex(2, 19));
+        stack1.push(new Complex(-1, 0));
+        stack1.push(new Complex(10, 100));
+
+        calcPopulator(calculator);
+        calculator.getVars().setVar('a', null);
+
+        vars1.setVar('b', new Complex(3, 5));
+        vars1.setVar('c', new Complex(-34, 12));
+        vars1.setVar('d', new Complex(34, -12));
+        vars1.setVar('e', new Complex(0, 12));
+        vars1.setVar('f', new Complex(34, 0));
+        vars1.setVar('g', new Complex(4, 1));
+        vars1.setVar('h', new Complex(56, -12));
+        vars1.setVar('i', new Complex(3, 1224));
+        vars1.setVar('j', new Complex(389, -121));
+        vars1.setVar('k', new Complex(43346, 133));
+        vars1.setVar('l', new Complex(-89, -1355));
+        vars1.setVar('m', new Complex(13, -23));
+        vars1.setVar('n', new Complex(34, 12));
+        vars1.setVar('o', new Complex(-123, 9685));
+        vars1.setVar('p', new Complex(472, 0));
+        vars1.setVar('q', new Complex(0, 12));
+        vars1.setVar('r', new Complex(12, 0));
+        vars1.setVar('s', new Complex(0, 0));
+        vars1.setVar('t', new Complex(1, 1));
+        vars1.setVar('u', new Complex(-1, -1));
+        vars1.setVar('v', new Complex(65, -12));
+        vars1.setVar('w', new Complex(118, -2));
+        vars1.setVar('x', new Complex(3, 0));
+        vars1.setVar('y', new Complex(25, 45));
+        vars1.setVar('z', new Complex(38, 12));
+
+        UserOpCommand comm2 = new UserOpCommand("ciao", "dup + 3 5i <a", calculator);
+        calculator.getUserOpMap().put("ciao", comm2);
+        try {
+            comm2.execute();
+        } catch (Exception e) {
+            comm2.rollback();
+        }
+
+        array1 = stack1.toArray();
+        array2 = calculator.getStack().toArray();
+        assertEquals(array1.length, array2.length);
+        for (int i = 0; i < array1.length; i++) {
+            assertEquals((Complex) array1[i], (Complex) array2[i]);
+        }
+
+        map1 = vars1.getCollect();
+        map2 = calculator.getVars().getCollect();
+        assertNull((Complex) map1.get('a'));
+        assertNull((Complex) map2.get('a'));
+        for (char x = 'b'; x <= 'z'; x++) {
+            Complex comp1 = (Complex) map1.get(x);
+            Complex comp2 = (Complex) map2.get(x);
+            assertEquals(true, comp1.equals(comp2));
+        }
+    }
+    
 }

@@ -5,6 +5,10 @@
  */
 package projectse;
 
+import com.vm.jcomplex.Complex;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  *
  * @author Group3
@@ -14,6 +18,8 @@ public class UserOpCommand implements Command {
     private String name;
     private String operation;
     private Calculator calc;
+    private Deque<Complex> stackApp;
+    private VarCollection<Complex> varsApp;
 
     public UserOpCommand(String name, String operation, Calculator calc) {
         name = name.trim();
@@ -36,6 +42,8 @@ public class UserOpCommand implements Command {
 
     @Override
     public void execute() {
+        stackApp = new ArrayDeque<>(calc.getStack());
+        varsApp = new VarCollection(calc.getVars());
         String operator[] = operation.split(" ");
         for (String op : operator) {
             int id = calc.recognizer(op);
@@ -51,6 +59,12 @@ public class UserOpCommand implements Command {
                 throw new UserOpNotFoundException();
             }
         }
+    }
+
+    @Override
+    public void rollback() {
+        calc.setStack(stackApp);
+        calc.setVars(varsApp);
     }
 
 }

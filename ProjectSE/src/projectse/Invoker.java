@@ -18,4 +18,8 @@ public class Invoker {
         comm.execute();
     }
 
+    public void rollback(Command comm) {
+        comm.rollback();
+    }
+
 }
