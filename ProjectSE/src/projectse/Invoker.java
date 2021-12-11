@@ -14,8 +14,8 @@ public class Invoker {
     public Invoker() {
     }
 
-    public void execute(Command comm) {
+    public void execute(Command comm) throws UserOpNotFoundException {
         comm.execute();
     }
-    
+
 }

@@ -11,6 +11,6 @@ package projectse;
  */
 public interface Command {
 
-    void execute();
-    
+    void execute() throws UserOpNotFoundException;
+
 }

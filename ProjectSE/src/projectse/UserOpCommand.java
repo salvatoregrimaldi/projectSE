@@ -33,10 +33,24 @@ public class UserOpCommand implements Command {
     public String toString() {
         return name + " " + operation;
     }
-    
+
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String operator[] = operation.split(" ");
+        for (String op : operator) {
+            int id = calc.recognizer(op);
+            if (id == 0) {
+                calc.pushComplex(op);
+            } else if (id > 0 && id <= 11) {
+                calc.makeOperation(id);
+            } else if (id >= 13 && id <= 16) {
+                calc.makeVarOperation(id, op.charAt(1));
+            } else if (id == 18) {
+                calc.getUserOpMap().get(op).execute();
+            } else {
+                throw new UserOpNotFoundException();
+            }
+        }
     }
 
 }

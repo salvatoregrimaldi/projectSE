@@ -50,6 +50,10 @@ public class VarCollection<E> {
         };
     }
     
+    public VarCollection(VarCollection<E> app) {
+        this.collect = new HashMap(app.collect);
+    }
+    
     public E getVar(Character c) throws UnacceptableKeyException{
         if (c == null || c < 'a' || c > 'z') {
             throw new UnacceptableKeyException();
