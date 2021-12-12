@@ -160,6 +160,9 @@ public class Calculator {
         if (isUserOp(input)) {
             return 18;
         }
+        if (input.split(" ")[0].equals("del") && isUserOp(input.split(" ")[1]) && input.split(" ").length == 2) {
+            return 19;
+        }
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
             return 0;
         }

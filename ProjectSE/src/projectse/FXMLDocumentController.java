@@ -115,7 +115,7 @@ public class FXMLDocumentController implements Initializable {
                         }
                         flag = true;
                         return;
-                    } else if (id > 12) {
+                    } else if (id > 12 && id < 17) {
                         input = input.trim();
                         try {
                             calc.makeVarOperation(id, input.charAt(input.length() - 1));
@@ -128,6 +128,32 @@ public class FXMLDocumentController implements Initializable {
                             flag = true;
                             return;
                         }
+                    } else if (id == 18) {
+                        try {
+                            invok.execute(calc.getUserOpMap().get(input.trim()));
+                            textField.setText("User-Op \"" + input.trim() + "\" Executed Successfully");
+                            flag = true;
+                        } catch (NoSuchElementException e) {
+                            textField.setText("Not Enough Elements Error");
+                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            flag = true;
+                            return;
+                        } catch (NullPointerException e) {
+                            textField.setText("Null Variable Error");
+                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            flag = true;
+                            return;
+                        } catch (UserOpNotFoundException e) {
+                            textField.setText("Inner User-Op No Longer Exists Error");
+                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            flag = true;
+                            return;
+                        }
+                    } else if (id == 19) {
+                        invok.delete(calc.getUserOpMap().get(input.trim().split(" ")[1]));
+                        textField.setText("User-Op \"" + input.trim().split(" ")[1] + "\" Deleted");
+                        flag = true;
+                        return;
                     } else if (id == -1) {
                         if (calc.recUserOp(input) == -1) {
                             textField.setText("Syntax Error");

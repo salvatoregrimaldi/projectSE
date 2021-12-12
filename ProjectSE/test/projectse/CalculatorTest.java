@@ -926,6 +926,16 @@ public class CalculatorTest {
         assertEquals(-1, instance.recognizer("  te st  "));
         assertEquals(-1, instance.recognizer("mix_"));
         assertEquals(-1, instance.recognizer("new"));
+
+        assertEquals(19, instance.recognizer("del prova"));
+        assertEquals(19, instance.recognizer("del test"));
+        assertEquals(19, instance.recognizer("del mix"));
+        assertEquals(-1, instance.recognizer("deel prova"));
+        assertEquals(-1, instance.recognizer("del prrova"));
+        assertEquals(-1, instance.recognizer("del  test"));
+        assertEquals(-1, instance.recognizer(" del  te st  "));
+        assertEquals(-1, instance.recognizer("del mix_"));
+        assertEquals(-1, instance.recognizer("del new"));
     }
 
     @Test
