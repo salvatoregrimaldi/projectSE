@@ -5,6 +5,7 @@
  */
 package projectse;
 
+import exceptions.UserOpNotFoundException;
 import com.vm.jcomplex.Complex;
 import java.io.File;
 import java.io.IOException;
@@ -87,12 +88,12 @@ public class FXMLDocumentController implements Initializable {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         alert.setHeaderText(null);
         alert.setGraphic(null);
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("styleAlert.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles/styleAlert.css").toExternalForm());
         if (b == false) {
-            stage.getIcons().add(new Image(this.getClass().getResource("cross.png").toString()));
+            stage.getIcons().add(new Image(this.getClass().getResource("/images/cross.png").toString()));
             alert.setTitle("Error Occurred!");
         } else {
-            stage.getIcons().add(new Image(this.getClass().getResource("tick.png").toString()));
+            stage.getIcons().add(new Image(this.getClass().getResource("/images/tick.png").toString()));
             alert.setTitle("Well Done!");
         }
         alert.setContentText(s);
@@ -129,7 +130,7 @@ public class FXMLDocumentController implements Initializable {
                     flag = false;
                 }
                 if (ke.getCode().equals(KeyCode.ENTER) && !textField.getText().equals("")) {
-                    input = textField.getText();
+                    input = textField.getText().trim();
                     textField.clear();
                     id = calc.recognizer(input);
                     if (id == 0) {
@@ -144,7 +145,6 @@ public class FXMLDocumentController implements Initializable {
                             return;
                         }
                     } else if (id == 12) {
-                        input = input.trim();
                         try {
                             visualFormat(calc.showVar(input.charAt(input.length() - 1)), textField.textProperty());
                         } catch (NullPointerException e) {      //lanciata dalla toString() quando la variabile ha valore null
@@ -153,7 +153,6 @@ public class FXMLDocumentController implements Initializable {
                         flag = true;
                         return;
                     } else if (id > 12 && id < 17) {
-                        input = input.trim();
                         try {
                             calc.makeVarOperation(id, input.charAt(input.length() - 1));
                         } catch (NoSuchElementException e) {
@@ -169,32 +168,32 @@ public class FXMLDocumentController implements Initializable {
                         }
                     } else if (id == 18) {
                         try {
-                            invok.execute(calc.getUserOpMap().get(input.trim()));
-                            textField.setText("User-Op \"" + input.trim() + "\" Executed Successfully");
+                            invok.execute(calc.getUserOpMap().get(input));
+                            textField.setText("User-Op \"" + input + "\" Executed Successfully");
                             textField.setStyle("-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: lightgreen; -fx-border-color: #D1901A; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana");
                             flag = true;
                         } catch (NoSuchElementException e) {
                             textField.setText("Not Enough Elements Error");
                             textField.setStyle("-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: tomato; -fx-border-color: #D1901A; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana");
-                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            invok.rollback(calc.getUserOpMap().get(input));
                             flag = true;
                             return;
                         } catch (NullPointerException e) {
                             textField.setText("Null Variable Error");
                             textField.setStyle("-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: tomato; -fx-border-color: #D1901A; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana");
-                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            invok.rollback(calc.getUserOpMap().get(input));
                             flag = true;
                             return;
                         } catch (UserOpNotFoundException e) {
                             textField.setText("Inner User-Op No Longer Exists Error");
                             textField.setStyle("-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: tomato; -fx-border-color: #D1901A; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana");
-                            invok.rollback(calc.getUserOpMap().get(input.trim()));
+                            invok.rollback(calc.getUserOpMap().get(input));
                             flag = true;
                             return;
                         }
                     } else if (id == 19) {
-                        invok.delete(calc.getUserOpMap().get(input.trim().split(" ")[1]));
-                        textField.setText("User-Op \"" + input.trim().split(" ")[1] + "\" Deleted");
+                        invok.delete(calc.getUserOpMap().get(input.split(" ")[1]));
+                        textField.setText("User-Op \"" + input.split(" ")[1] + "\" Deleted");
                         textField.setStyle("-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: lightgreen; -fx-border-color: #D1901A; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana");
                         flag = true;
                         return;
@@ -205,7 +204,6 @@ public class FXMLDocumentController implements Initializable {
                             flag = true;
                             return;
                         }
-                        input = input.trim();
                         String nameOp = input.split(" ")[0];
                         String s;
                         if (calc.getUserOpMap().containsKey(nameOp)) {
@@ -237,8 +235,8 @@ public class FXMLDocumentController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLInstructions.fxml"));
         if (stageInst == null || !stageInst.isShowing()) {
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("styleInstructions.css").toExternalForm());
-            stageInst.getIcons().add(new Image(this.getClass().getResourceAsStream("iconInstructions.png")));
+            scene.getStylesheets().add(getClass().getResource("/styles/styleInstructions.css").toExternalForm());
+            stageInst.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/iconInstructions.png")));
             stageInst.setScene(scene);
             stageInst.setTitle("Instructions");
             stageInst.setIconified(false);

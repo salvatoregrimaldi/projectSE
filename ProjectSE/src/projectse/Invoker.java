@@ -5,6 +5,8 @@
  */
 package projectse;
 
+import exceptions.UserOpNotFoundException;
+
 /**
  *
  * @author Group3

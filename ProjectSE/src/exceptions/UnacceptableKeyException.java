@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projectse;
+package exceptions;
 
 /**
  *
  * @author Group3
  */
-public class UserOpNotFoundException extends RuntimeException {
+public class UnacceptableKeyException extends RuntimeException {
 
     /**
-     * Creates a new instance of <code>UserOpNotFoundException</code> without
+     * Creates a new instance of <code>UnacceptableException</code> without
      * detail message.
      */
-    public UserOpNotFoundException() {
+    public UnacceptableKeyException() {
     }
 
     /**
-     * Constructs an instance of <code>UserOpNotFoundException</code> with the
+     * Constructs an instance of <code>UnacceptableException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public UserOpNotFoundException(String msg) {
+    public UnacceptableKeyException(String msg) {
         super(msg);
     }
 }

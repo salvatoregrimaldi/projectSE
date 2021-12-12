@@ -5,6 +5,7 @@
  */
 package projectse;
 
+import exceptions.UserOpNotFoundException;
 import com.vm.jcomplex.Complex;
 import java.util.ArrayDeque;
 import java.util.Deque;

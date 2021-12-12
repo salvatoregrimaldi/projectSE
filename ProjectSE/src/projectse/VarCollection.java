@@ -5,6 +5,7 @@
  */
 package projectse;
 
+import exceptions.UnacceptableKeyException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;

@@ -5,6 +5,7 @@
  */
 package projectse;
 
+import exceptions.UnacceptableKeyException;
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
 import java.io.BufferedInputStream;
