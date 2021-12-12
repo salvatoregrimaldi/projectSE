@@ -8,12 +8,20 @@ and open the template in the editor.
     Author     : Group3
 */
 
-.list-view .list-cell {
-    -fx-background-radius: 10px;
+.alert {
     -fx-background-color: #333333;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-radius: 10px;
-    -fx-padding: 14px;
     -fx-font-family: "Verdana";
-    -fx-font-size: 20px;
+}
+
+.alert .content {
+    -fx-text-fill: #FFFFFF;
+}
+
+.alert .button{
+    -fx-background-color: #D1901A;
+}
+
+.alert .button:hover{
+    -fx-background-color: derive(#D1901A,30.0%);
+    -fx-cursor: hand;
 }

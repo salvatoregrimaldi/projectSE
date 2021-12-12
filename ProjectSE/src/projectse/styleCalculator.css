@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    
+    Author     : Group3
+*/
+
+.list-view .list-cell {
+    -fx-background-radius: 10px;
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 10px;
+    -fx-padding: 14px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 20px;
+}
+
+.menu{
+    -fx-cursor: hand;
+    -fx-background-color:#D1901A
+}
+
+.menu:hover{
+    -fx-background-color: derive(#D1901A,30.0%);
+}
+
+.menu .label {
+    -fx-background-radius: 10px;
+    -fx-text-fill: #252525;
+    -fx-border-radius: 10px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 15px;
+}
+
+.menu-item .label{
+    -fx-text-fill: #D1901A;
+    -fx-border-radius: 10px;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 15px;
+}
+
+.context-menu {
+    -fx-background-radius: 10px;
+    -fx-background-color: #252525;
+    -fx-border-radius: 10px;
+    -fx-border-color: #171717;
+    -fx-font-family: "Verdana";
+    -fx-font-size: 15px;
+}
+
+.context-menu .menu-item:focused{
+    -fx-text-fill: #AAAAAA;
+    -fx-background-radius: 10px;
+    -fx-background-color: #333333;
+    -fx-cursor: hand;
+}
