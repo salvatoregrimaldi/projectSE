@@ -5,6 +5,7 @@
  */
 package projectse;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author Group3
  * @param <E>
  */
-public class VarCollection<E> {
+public class VarCollection<E> implements Serializable {
 
     private Map<Character, E> collect;
 
@@ -49,29 +50,29 @@ public class VarCollection<E> {
             }
         };
     }
-    
+
     public VarCollection(VarCollection<E> app) {
         this.collect = new HashMap(app.collect);
     }
-    
-    public E getVar(Character c) throws UnacceptableKeyException{
+
+    public E getVar(Character c) throws UnacceptableKeyException {
         if (c == null || c < 'a' || c > 'z') {
             throw new UnacceptableKeyException();
         }
         return collect.get(c);
     }
 
-    public void setVar(Character c, E v) throws UnacceptableKeyException{
+    public void setVar(Character c, E v) throws UnacceptableKeyException {
         if (c == null || c < 'a' || c > 'z') {
             throw new UnacceptableKeyException();
         }
         this.collect.replace(c, v);
     }
-    
+
     public Map<Character, E> getCollect() {
         return collect;
     }
-    
+
     @Override
     public String toString() {
         return "VarCollection =" + collect;

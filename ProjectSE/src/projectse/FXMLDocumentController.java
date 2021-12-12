@@ -6,21 +6,29 @@
 package projectse;
 
 import com.vm.jcomplex.Complex;
+import java.io.File;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -38,6 +46,8 @@ public class FXMLDocumentController implements Initializable {
     private boolean flag = false;
     public static final int N_OP = 11;
     private Invoker invok = new Invoker();
+    @FXML
+    private AnchorPane rootPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -178,5 +188,41 @@ public class FXMLDocumentController implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    private void openInst(ActionEvent event) {
+    }
+
+    @FXML
+    private void saveDialog(ActionEvent event) {
+        FileChooser fileChooser1 = new FileChooser();
+        fileChooser1.setTitle("Save User-Operations");
+        fileChooser1.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("File", "*.bin"));
+        File file = fileChooser1.showSaveDialog(rootPane.getScene().getWindow());
+        if (!calc.saveUserOps(file)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("cross.png").toString()));
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
+            alert.setTitle("Error Occurred!");
+            alert.setContentText("Impossible to save user-operations in selected file");
+            alert.showAndWait();
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("tick.png").toString()));
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle("Well Done!");
+        alert.setContentText("User-operations successfully saved in selected file");
+        alert.getDialogPane().setPadding(new Insets(0, 0, 0, 65));
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void restoreDialog(ActionEvent event) {
     }
 }

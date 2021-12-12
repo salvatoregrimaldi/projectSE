@@ -6,10 +6,18 @@
 package projectse;
 
 import com.vm.jcomplex.Complex;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -1849,4 +1857,36 @@ public class CalculatorTest {
         instance.pushComplex("24+2i");
         instance.subtractVar('w');
     }
+
+    @Test
+    public void testSaveUserOps() throws FileNotFoundException, IOException, ClassNotFoundException {
+        UserOpCommand comm1 = new UserOpCommand("alle", "+i 3 +i drop >z", instance);
+        instance.getUserOpMap().put("alle", comm1);
+        UserOpCommand comm2 = new UserOpCommand("salvo", "sqrt 3+4i / 4i 2 dup 3 +-", instance);
+        instance.getUserOpMap().put("salvo", comm2);
+        UserOpCommand comm3 = new UserOpCommand("enri", "5+8i >f <f sqrt -", instance);
+        instance.getUserOpMap().put("enri", comm3);
+        UserOpCommand comm4 = new UserOpCommand("andre", "/ +c -c / 2 sqrt +v + drop", instance);
+        instance.getUserOpMap().put("andre", comm4);
+        UserOpCommand comm5 = new UserOpCommand("enri2", "dup >e 5 over * >x drop <e <x over over 10 alle", instance);
+        instance.getUserOpMap().put("enri2", comm5);
+
+        File file = new File("saveFile.bin");
+        instance.saveUserOps(file);
+        ConcurrentMap<String, UserOpCommand> c;
+        try (ObjectInputStream din = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+            c = (ConcurrentHashMap) din.readObject();
+            assertEquals(c.size(), instance.getUserOpMap().size());
+            for (UserOpCommand x : c.values()) {
+                assertEquals(x.getOperation(), instance.getUserOpMap().get(x.getName()).getOperation());
+            }
+            din.close();
+        }
+    }
+
+    @Test
+    public void testSaveUserOpExceptions() {
+        assertEquals(false, instance.saveUserOps(null));
+    }
+
 }

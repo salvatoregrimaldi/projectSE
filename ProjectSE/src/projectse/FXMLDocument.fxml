@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="722.0" prefWidth="520.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="722.0" prefWidth="520.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectse.FXMLDocumentController">
     <children>
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-        <TextField fx:id="textField" layoutX="17.0" layoutY="14.0" prefHeight="26.0" prefWidth="342.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0"/>
-        <ListView fx:id="listView" layoutX="88.0" layoutY="257.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="75.0" />
+        <MenuBar layoutX="17.0" layoutY="5.0"> 
+            <menus> 
+                <Menu mnemonicParsing="false" text="Menu"> 
+                    <items> 
+                        <MenuItem mnemonicParsing="false" onAction="#openInst" text="Instructions" /> 
+                        <MenuItem mnemonicParsing="false" onAction="#saveDialog" text="Save User-Operations" /> 
+                        <MenuItem mnemonicParsing="false" onAction="#restoreDialog" text="Restore User-Operations" /> 
+                    </items> 
+                </Menu> 
+            </menus> 
+        </MenuBar> 
+        <TextField fx:id="textField" layoutX="17.0" layoutY="14.0" prefHeight="40.0" prefWidth="486.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px; -fx-font-size: 20px; -fx-font-family: Verdana" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="35.0" />
+        <ListView fx:id="listView" layoutX="88.0" layoutY="240.0" prefHeight="634.0" prefWidth="486.0" style="-fx-background-radius: 10px; -fx-background-color: #333333; -fx-text-fill: #FFFFFF; -fx-border-color: #171717; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="80.0" />
     </children>
 </AnchorPane>

@@ -6,6 +6,7 @@
 package projectse;
 
 import com.vm.jcomplex.Complex;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Group3
  */
-public class UserOpCommand implements Command {
+public class UserOpCommand implements Command, Serializable {
 
     private String name;
     private String operation;
@@ -35,6 +36,14 @@ public class UserOpCommand implements Command {
         this.name = name;
         this.operation = operation;
         this.calc = calc;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOperation() {
+        return operation;
     }
 
     @Override

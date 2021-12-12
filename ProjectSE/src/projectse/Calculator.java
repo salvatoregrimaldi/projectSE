@@ -7,6 +7,12 @@ package projectse;
 
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Group3
  */
-public class Calculator {
+public class Calculator implements Serializable {
 
     private Deque<Complex> stack;
     private VarCollection<Complex> vars;
@@ -493,5 +499,17 @@ public class Calculator {
         } else {
             throw new NullPointerException();
         }
+    }
+
+    public boolean saveUserOps(File file) {
+        if (file != null) {
+            try (ObjectOutputStream dout = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+                dout.writeObject(userOpMap);
+                return true;
+            } catch (IOException ex) {
+                return false;
+            }
+        }
+        return false;
     }
 }
