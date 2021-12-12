@@ -171,7 +171,7 @@ public class Calculator implements Serializable {
         if (isUserOp(input)) {
             return 18;
         }
-        if (input.split(" ")[0].equals("del") && isUserOp(input.split(" ")[1]) && input.split(" ").length == 2) {
+        if (input.split(" ")[0].equals("del") && input.split(" ").length == 2 && isUserOp(input.split(" ")[1])) {
             return 19;
         }
         if (isReal(input) || isImaginary(input) || isComplex(input)) {
