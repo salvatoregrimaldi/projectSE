@@ -7,13 +7,17 @@ package projectse;
 
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -512,4 +516,22 @@ public class Calculator implements Serializable {
         }
         return false;
     }
+
+    public boolean restoreUserOps(File file) {
+        if (file != null) {
+            ConcurrentMap<String, UserOpCommand> c;
+            try (ObjectInputStream din = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+                c = (ConcurrentHashMap) din.readObject();
+                for (UserOpCommand x : c.values()) {
+                    x.setCalc(this);
+                }
+                userOpMap.putAll(c);
+                return true;
+            } catch (IOException | ClassNotFoundException ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
 }

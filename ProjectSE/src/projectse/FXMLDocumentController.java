@@ -172,8 +172,14 @@ public class FXMLDocumentController implements Initializable {
                         }
                         input = input.trim();
                         String nameOp = input.split(" ")[0];
+                        String s;
+                        if (calc.getUserOpMap().containsKey(nameOp)) {
+                            s = "Modified";
+                        } else {
+                            s = "Added";
+                        }
                         calc.getUserOpMap().put(nameOp, new UserOpCommand(nameOp, input.substring(nameOp.length() + 1), calc));
-                        textField.setText("User-Op \"" + nameOp + "\" Added");
+                        textField.setText("User-Op \"" + nameOp + "\" " + s);
                         flag = true;
                         return;
                     }
@@ -224,5 +230,29 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void restoreDialog(ActionEvent event) {
+        FileChooser fileChooser2 = new FileChooser();
+        fileChooser2.setTitle("Ricerca file lista studenti");
+        fileChooser2.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("File", "*.bin"));
+        File file = fileChooser2.showOpenDialog(rootPane.getScene().getWindow());
+        if (!calc.restoreUserOps(file)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("cross.png").toString()));
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
+            alert.setTitle("Error Occurred!");
+            alert.setContentText("Impossible to restore user-operations from selected file");
+            alert.showAndWait();
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("tick.png").toString()));
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle("Well Done!");
+        alert.setContentText("User-operations from selected file successfully restored");
+        alert.getDialogPane().setPadding(new Insets(0, 0, 0, 35));
+        alert.showAndWait();
     }
 }

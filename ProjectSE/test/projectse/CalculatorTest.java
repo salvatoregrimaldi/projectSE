@@ -7,11 +7,14 @@ package projectse;
 
 import com.vm.jcomplex.Complex;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -1886,6 +1889,59 @@ public class CalculatorTest {
 
     @Test
     public void testSaveUserOpExceptions() {
+        assertEquals(false, instance.saveUserOps(null));
+    }
+    
+    @Test
+    public void testRestoreUserOps() throws IOException {
+        UserOpCommand comm1 = new UserOpCommand("alle", "+i 3 +i drop >z", instance);
+        instance.getUserOpMap().put("alle", comm1);
+        UserOpCommand comm2 = new UserOpCommand("salvo", "sqrt 3+4i / 4i 2 dup 3 +-", instance);
+        instance.getUserOpMap().put("salvo", comm2);
+        UserOpCommand comm3 = new UserOpCommand("enri", "5+8i >f <f sqrt -", instance);
+        instance.getUserOpMap().put("enri", comm3);
+        UserOpCommand comm4 = new UserOpCommand("andre", "/ +c -c / 2 sqrt +v + drop", instance);
+        instance.getUserOpMap().put("andre", comm4);
+        UserOpCommand comm5 = new UserOpCommand("enri2", "dup >e 5 over * >x drop <e <x over over 10 alle", instance);
+        instance.getUserOpMap().put("enri2", comm5);
+        UserOpCommand comm6 = new UserOpCommand("prova0", "dup * +-", instance);
+        instance.getUserOpMap().put("prova0", comm6);
+        UserOpCommand comm7 = new UserOpCommand("prova1", "* drop prova0 <c", instance);
+        instance.getUserOpMap().put("prova1", comm7);
+        UserOpCommand comm8 = new UserOpCommand("prova2", "/ sqrt prova1", instance);
+        instance.getUserOpMap().put("prova2", comm8);
+        UserOpCommand comm9 = new UserOpCommand("prova3", "prova2 + +-", instance);
+        instance.getUserOpMap().put("prova3", comm9);
+        UserOpCommand comm10 = new UserOpCommand("prova4", "+ prova2 clear >a", instance);
+        instance.getUserOpMap().put("prova4", comm10);
+
+        File file = new File("restoreFile.bin");
+        try (ObjectOutputStream dout = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+            dout.writeObject(instance.getUserOpMap());
+            dout.close();
+        }
+
+        instance.getUserOpMap().get("alle").delete();
+        instance.getUserOpMap().get("salvo").delete();
+        instance.getUserOpMap().get("enri").delete();
+        instance.getUserOpMap().get("andre").delete();
+        instance.getUserOpMap().get("prova0").delete();
+
+        instance.restoreUserOps(file);
+        assertEquals("alle +i 3 +i drop >z", instance.getUserOpMap().get("alle").toString());
+        assertEquals("salvo sqrt 3+4i / 4i 2 dup 3 +-", instance.getUserOpMap().get("salvo").toString());
+        assertEquals("enri 5+8i >f <f sqrt -", instance.getUserOpMap().get("enri").toString());
+        assertEquals("andre / +c -c / 2 sqrt +v + drop", instance.getUserOpMap().get("andre").toString());
+        assertEquals("enri2 dup >e 5 over * >x drop <e <x over over 10 alle", instance.getUserOpMap().get("enri2").toString());
+        assertEquals("prova0 dup * +-", instance.getUserOpMap().get("prova0").toString());
+        assertEquals("prova1 * drop prova0 <c", instance.getUserOpMap().get("prova1").toString());
+        assertEquals("prova2 / sqrt prova1", instance.getUserOpMap().get("prova2").toString());
+        assertEquals("prova3 prova2 + +-", instance.getUserOpMap().get("prova3").toString());
+        assertEquals("prova4 + prova2 clear >a", instance.getUserOpMap().get("prova4").toString());
+    }
+
+    @Test
+    public void testRestoreUserOpExceptions() {
         assertEquals(false, instance.saveUserOps(null));
     }
 

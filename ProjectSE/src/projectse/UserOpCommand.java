@@ -46,6 +46,10 @@ public class UserOpCommand implements Command, Serializable {
         return operation;
     }
 
+    public void setCalc(Calculator calc) {
+        this.calc = calc;
+    }
+    
     @Override
     public String toString() {
         return name + " " + operation;
