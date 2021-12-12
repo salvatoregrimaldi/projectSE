@@ -8,9 +8,9 @@ package projectse;
 import java.util.Deque;
 import com.vm.jcomplex.Complex;
 import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  *
@@ -20,12 +20,12 @@ public class Calculator {
 
     private Deque<Complex> stack;
     private VarCollection<Complex> vars;
-    private Map<String, UserOpCommand> userOpMap;
+    private ConcurrentMap<String, UserOpCommand> userOpMap;
 
     public Calculator() {
         stack = new ArrayDeque<Complex>();
         vars = new VarCollection<>();
-        userOpMap = new HashMap<>();
+        userOpMap = new ConcurrentHashMap<>();
     }
 
     public Deque<Complex> getStack() {
@@ -44,7 +44,7 @@ public class Calculator {
         this.vars = vars;
     }
 
-    public Map<String, UserOpCommand> getUserOpMap() {
+    public ConcurrentMap<String, UserOpCommand> getUserOpMap() {
         return userOpMap;
     }
 
@@ -122,7 +122,7 @@ public class Calculator {
             return -1;
         }
         String parts[] = input.split(" ");
-        if (!(parts[0].equals("show")) && !(parts[0].matches("[a-z]")) && parts.length > 1 && !(input.substring(parts[0].length()).contains(parts[0]))) {
+        if (!(parts[0].equals("show")) && !(parts[0].equals("del")) && !(parts[0].matches("[a-z]")) && parts.length > 1 && !(input.substring(parts[0].length()).contains(parts[0]))) {
             int id = recognizer(parts[0]);
             if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
                 for (int i = 1; i < parts.length; i++) {

@@ -23,8 +23,8 @@ import static org.junit.Assert.*;
  */
 public class CalculatorTest {
 
-    Calculator instance;
-    Complex[] array;
+    private Calculator instance;
+    private Complex[] array;
 
     public CalculatorTest() {
     }
@@ -1540,9 +1540,11 @@ public class CalculatorTest {
         assertEquals(-1, instance.recUserOp("oper  drop dup 65i >a"));
         assertEquals(-1, instance.recUserOp("oper drop   dup 65i swap + >a"));
 
-        /*la dichiarazione dell'operazione-utente non può avere "show" come nome dell'operazione*/
+        /*la dichiarazione dell'operazione-utente non può avere "show" o "del" come nome dell'operazione*/
         assertEquals(-1, instance.recUserOp("show drop dup 65i swap + >a"));
         assertEquals(-1, instance.recUserOp("show +- sqrt +a"));
+        assertEquals(-1, instance.recUserOp("del drop dup 65i swap + >a"));
+        assertEquals(-1, instance.recUserOp("del +- sqrt +a"));
 
         /*la dichiarazione dell'operazione-utente non può avere una lettera [a-z] come nome dell'operazione*/
         for (char x = 'a'; x <= 'z'; x++) {

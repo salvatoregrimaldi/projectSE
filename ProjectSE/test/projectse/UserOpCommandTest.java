@@ -246,7 +246,7 @@ public class UserOpCommandTest {
     public void testRollBack() {
         stack1 = new ArrayDeque<>();
         vars1 = new VarCollection();
-        
+
         UserOpCommand comm1 = new UserOpCommand("hello", "4 5i dup clear drop 3i 54", calculator);
         calculator.getUserOpMap().put("hello", comm1);
         try {
@@ -352,5 +352,62 @@ public class UserOpCommandTest {
             assertEquals(true, comp1.equals(comp2));
         }
     }
-    
+
+    /**
+     * Test of delete method, of class UserOpCommand.
+     */
+    @Test
+    public void testDelete() {
+        /*Creazione di alcuni oggetti istanze di UserOpCommand*/
+        UserOpCommand comm1 = new UserOpCommand("prova", "dup + drop 5i >a", calculator);
+        calculator.getUserOpMap().put("prova", comm1);
+        UserOpCommand comm2 = new UserOpCommand("test", "sqrt +- over over", calculator);
+        calculator.getUserOpMap().put("test", comm2);
+        UserOpCommand comm3 = new UserOpCommand("mix", "* drop - test /", calculator);
+        calculator.getUserOpMap().put("mix", comm3);
+        UserOpCommand comm4 = new UserOpCommand("enri", "5+8i >f <f sqrt -", calculator);
+        calculator.getUserOpMap().put("enri", comm4);
+        UserOpCommand comm5 = new UserOpCommand("andre", "/ +c -c / 2 sqrt +v + drop", calculator);
+        calculator.getUserOpMap().put("andre", comm5);
+        UserOpCommand comm6 = new UserOpCommand("prova0", "dup * +-", calculator);
+        calculator.getUserOpMap().put("prova0", comm6);
+        UserOpCommand comm7 = new UserOpCommand("prova1", "* drop prova0 <c", calculator);
+        calculator.getUserOpMap().put("prova1", comm7);
+        UserOpCommand comm8 = new UserOpCommand("prova2", "/ sqrt prova1", calculator);
+        calculator.getUserOpMap().put("prova2", comm8);
+        UserOpCommand comm9 = new UserOpCommand("prova3", "prova2 + +-", calculator);
+        calculator.getUserOpMap().put("prova3", comm9);
+        UserOpCommand comm10 = new UserOpCommand("prova4", "+ prova2 clear >a", calculator);
+        calculator.getUserOpMap().put("prova4", comm10);
+
+        /*Verifica che i commands siano stati correttamente inseriti*/
+        assertEquals(comm1, calculator.getUserOpMap().get("prova"));
+        assertEquals(comm2, calculator.getUserOpMap().get("test"));
+        assertEquals(comm3, calculator.getUserOpMap().get("mix"));
+        assertEquals(comm4, calculator.getUserOpMap().get("enri"));
+        assertEquals(comm5, calculator.getUserOpMap().get("andre"));
+        assertEquals(comm6, calculator.getUserOpMap().get("prova0"));
+        assertEquals(comm7, calculator.getUserOpMap().get("prova1"));
+        assertEquals(comm8, calculator.getUserOpMap().get("prova2"));
+        assertEquals(comm9, calculator.getUserOpMap().get("prova3"));
+        assertEquals(comm10, calculator.getUserOpMap().get("prova4"));
+
+        comm1.delete();
+        assertNull(calculator.getUserOpMap().get("prova"));
+        comm2.delete();
+        assertNull(calculator.getUserOpMap().get("test"));
+        comm3.delete();
+        assertNull(calculator.getUserOpMap().get("mix"));
+        comm4.delete();
+        assertNull(calculator.getUserOpMap().get("enri"));
+        comm5.delete();
+        assertNull(calculator.getUserOpMap().get("andre"));
+        comm6.delete();
+        assertNull(calculator.getUserOpMap().get("prova0"));
+        assertNull(calculator.getUserOpMap().get("prova1"));
+        assertNull(calculator.getUserOpMap().get("prova2"));
+        assertNull(calculator.getUserOpMap().get("prova3"));
+        assertNull(calculator.getUserOpMap().get("prova4"));
+    }
+
 }

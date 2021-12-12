@@ -15,4 +15,5 @@ public interface Command {
     
     void rollback();
 
+    void delete();
 }

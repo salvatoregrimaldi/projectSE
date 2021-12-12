@@ -8,6 +8,8 @@ package projectse;
 import com.vm.jcomplex.Complex;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  *
@@ -65,6 +67,18 @@ public class UserOpCommand implements Command {
     public void rollback() {
         calc.setStack(stackApp);
         calc.setVars(varsApp);
+    }
+
+    @Override
+    public void delete() {
+        ConcurrentMap<String, UserOpCommand> map = calc.getUserOpMap();
+        map.remove(name);
+        for (Map.Entry<String, UserOpCommand> entry : map.entrySet()) {
+            if (entry.getValue().operation.contains(name)) {
+                entry.getValue().delete();
+                map.remove(entry.getKey());
+            }
+        }
     }
 
 }
