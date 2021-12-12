@@ -7,6 +7,7 @@ package projectse;
 
 import com.vm.jcomplex.Complex;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -16,9 +17,12 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -46,6 +50,7 @@ public class FXMLDocumentController implements Initializable {
     private boolean flag = false;
     public static final int N_OP = 11;
     private Invoker invok = new Invoker();
+    private Stage stageInst = new Stage();
     @FXML
     private AnchorPane rootPane;
 
@@ -197,7 +202,21 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void openInst(ActionEvent event) {
+    private void openInst(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLInstructions.fxml"));
+        if (stageInst == null || !stageInst.isShowing()) {
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+            stageInst.getIcons().add(new Image(this.getClass().getResourceAsStream("iconInstructions.png")));
+            stageInst.setScene(scene);
+            stageInst.setTitle("Instructions");
+            stageInst.setIconified(false);
+            stageInst.show();
+        } else if (stageInst.isIconified()) {
+            stageInst.setIconified(false);
+        } else {
+            stageInst.toFront();
+        }
     }
 
     @FXML
