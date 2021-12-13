@@ -23,7 +23,7 @@ public class Invoker {
     public void rollback(Command comm) {
         comm.rollback();
     }
-    
+
     public void delete(Command comm) {
         comm.delete();
     }

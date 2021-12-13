@@ -15,6 +15,11 @@ import java.util.Map;
  * @author Group3
  * @param <E>
  */
+/*
+La classe VarCollection<E> contiene la collezione utilizzata per memorizzare le variabili.
+In particolare, viene utilizzata una Map i cui elementi hanno come chiave il nome della variabile, ossia
+una lettera dell'alfabeto, e come valore un tipo generico.
+ */
 public class VarCollection<E> implements Serializable {
 
     private Map<Character, E> collect;

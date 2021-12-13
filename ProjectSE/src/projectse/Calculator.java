@@ -18,7 +18,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayDeque;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -26,6 +25,10 @@ import java.util.concurrent.ConcurrentMap;
 /**
  *
  * @author Group3
+ */
+/*
+La classe Calculator contiene lo Stack, le variabili e le operazioni-utente ad essa associati.
+In essa sono presenti, inoltre, i metodi necessari al funzionamento delle operazioni base.
  */
 public class Calculator implements Serializable {
 
@@ -59,6 +62,10 @@ public class Calculator implements Serializable {
         return userOpMap;
     }
 
+    /*
+    Il metodo isReal() ritorna "true" se la stringa passata in input è un numero complesso
+    puramente reale. Altrimenti ritorna "false".
+     */
     private boolean isReal(String input) {
         try {
             Double.parseDouble(input);
@@ -68,6 +75,10 @@ public class Calculator implements Serializable {
         return true;
     }
 
+    /*
+    Il metodo isImaginary() ritorna "true" se la stringa passata in input è un numero complesso
+    puramente immaginario. Altrimenti ritorna "false".
+     */
     private boolean isImaginary(String input) {
         if (input.charAt(0) == '+' || input.charAt(0) == '-') {
             input = input.substring(1);
@@ -86,6 +97,10 @@ public class Calculator implements Serializable {
         return false;
     }
 
+    /*
+    Il metodo isComplex() ritorna "true" se la stringa passata in input è un numero complesso 
+    costituito da parte reale e parte immaginaria. Altrimenti ritorna "false".
+     */
     private boolean isComplex(String input) {
         if (input.contains(" ")) {
             return false;
@@ -93,6 +108,9 @@ public class Calculator implements Serializable {
         if (input.charAt(0) == '+' || input.charAt(0) == '-') {
             input = input.substring(1);
         }
+
+        //viene creato un array per contenere parte reale e parte immaginaria del numero complesso 
+        //passato in input
         String[] parts = {"", ""};
         parts = input.split("\\+|-", -1);
         if (parts.length != 2) {
@@ -110,6 +128,9 @@ public class Calculator implements Serializable {
         if (parts[0].replaceFirst("i", "").contains("i") || parts[1].replaceFirst("i", "").contains("i")) {
             return false;
         }
+
+        //viene effettuata una sostituzione di i con 1i per poter controllare se parte reale ed immaginaria 
+        //sono numeri validi
         if (parts[0].equals("i")) {
             parts[0] = "1i";
         } else if (parts[1].equals("i")) {
@@ -123,19 +144,31 @@ public class Calculator implements Serializable {
         return true;
     }
 
+    /*
+    Il metodo isUserOp() ritorna "true" se l'operazione passata in input è un'operazione-utente eseguibile
+    in quanto è presente nella userOpMap della calcolatrice. Altrimenti ritorna "false".
+     */
     private boolean isUserOp(String op) {
         return userOpMap.containsKey(op);
     }
 
+    /*
+    Il metodo recUserOp() ritorna "1" se la stringa passata in input è un'operazione-utente valida.
+    Altrimenti ritorna "-1".
+     */
     public int recUserOp(String input) {
         input = input.trim();
         if (input.contains("  ")) {
             return -1;
         }
         String parts[] = input.split(" ");
+
+        //un'operazione-utente non può avere come nome "show", "del", una lettera dell'alfabeto o un numero
         if (!(parts[0].equals("show")) && !(parts[0].equals("del")) && !(parts[0].matches("[a-z]")) && parts.length > 1 && !(input.substring(parts[0].length()).contains(parts[0]))) {
             int id = recognizer(parts[0]);
             if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16))) {
+
+                //viene chiamato il metodo recognizer() su ogni operatore dell'operazione per verificare che sia valido
                 for (int i = 1; i < parts.length; i++) {
                     id = recognizer(parts[i]);
                     if (!((id >= 0 && id <= 11) || (id >= 13 && id <= 16) || (id == 18))) {
@@ -151,6 +184,10 @@ public class Calculator implements Serializable {
         return 1;
     }
 
+    /*
+    Il metodo recognizer() ritorna un intero da 0 a 19 in base all'operazione riconosciuta.
+    Altrimenti ritorna "-1".
+     */
     public int recognizer(String input) {
         input = input.trim();
         if (input.matches("show [a-z]")) {
@@ -204,6 +241,10 @@ public class Calculator implements Serializable {
         return -1;
     }
 
+    /*
+    Il metodo pushComplex() inserisce il numero complesso passato in input nello stack e ritorna "true"
+    se l'operazione è avvenuta con successo. Altrimenti ritorna "false".
+     */
     public boolean pushComplex(String number) {
         String swap;
         int firstSign = 1;
@@ -223,6 +264,8 @@ public class Calculator implements Serializable {
         }
 
         if (isImaginary(number)) {
+
+            //viene controllato e conservato il segno del numero digitato
             if (number.charAt(0) == '+') {
                 number = number.substring(1);
             } else if (number.charAt(0) == '-') {
@@ -238,7 +281,7 @@ public class Calculator implements Serializable {
                 }
             } else {
                 number = number.replace("i", "");
-                if (number.matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                if (number.matches("0*(\\.0*)?")) {
                     number = "0";
                     firstSign = 1;
                 }
@@ -252,6 +295,8 @@ public class Calculator implements Serializable {
         }
 
         if (isComplex(number)) {
+
+            //viene controllato e conservato il segno del numero digitato in prima posizione
             if (number.charAt(0) == '+') {
                 number = number.substring(1);
             } else if (number.charAt(0) == '-') {
@@ -268,16 +313,21 @@ public class Calculator implements Serializable {
             } else if (parts[0].equals("i")) {
                 parts[0] = "1i";
             }
+
+            //se il numero digitato in prima posizione contiene i, esso viene scambiato con il numero
+            //digitato in seconda posizione
             if (parts[0].contains("i")) {
                 swap = parts[0];
                 parts[0] = parts[1];
                 parts[1] = swap;
                 parts[1] = parts[1].replace("i", "");
-                if (parts[0].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+
+                //viene controllato e conservato il segno del numero digitato in seconda posizione
+                if (parts[0].matches("0*(\\.0*)?")) {
                     parts[0] = "0";
                     secondSign = 1;
                 }
-                if (parts[1].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                if (parts[1].matches("0*(\\.0*)?")) {
                     parts[1] = "0";
                     firstSign = 1;
                 }
@@ -289,11 +339,11 @@ public class Calculator implements Serializable {
                 }
             } else {
                 parts[1] = parts[1].replace("i", "");
-                if (parts[0].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                if (parts[0].matches("0*(\\.0*)?")) {
                     parts[0] = "0";
                     firstSign = 1;
                 }
-                if (parts[1].matches("0*(\\.0*)?")) {        //viene fatto poiché la libreria non gestisce correttamente -0 o -0.000...
+                if (parts[1].matches("0*(\\.0*)?")) {
                     parts[1] = "0";
                     secondSign = 1;
                 }
@@ -312,6 +362,10 @@ public class Calculator implements Serializable {
         return stack.pop();
     }
 
+    /*
+    Il metodo makeOperation() esegue una determinata operazione in base all'id passato in input e ritorna
+    l'intero corrispondente all'id. Ritorna "-1" se l'id passato in input non corrisponde ad alcuna operazione
+     */
     public int makeOperation(int id) {
         switch (id) {
             case 1:
@@ -451,6 +505,12 @@ public class Calculator implements Serializable {
         stack.push(op2);
     }
 
+    /*
+    Il metodo makeVarOperation() esegue una determinata operazione sulla variabile passata in input
+    in base all'id passato in input e ritorna l'intero corrispondente all'id. 
+    Ritorna "-1" se l'id passato in input non corrisponde ad alcuna operazione.
+    Nel caso in cui la variabile non sia valida, viene rilanciata l'eccezione UnacceptableKeyException
+     */
     public int makeVarOperation(int id, char c) throws UnacceptableKeyException {
         switch (id) {
             case 13:
@@ -523,6 +583,9 @@ public class Calculator implements Serializable {
             ConcurrentMap<String, UserOpCommand> c;
             try (ObjectInputStream din = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
                 c = (ConcurrentHashMap) din.readObject();
+
+                //il riferimento della calcolatrice associata alle operazioni-utente salvate
+                //su file viene aggiornato con quello della calcolatrice corrente
                 for (UserOpCommand x : c.values()) {
                     x.setCalc(this);
                 }
